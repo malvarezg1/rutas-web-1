@@ -9,6 +9,15 @@ All the information of the routes and tasks will be stored in a real time fireba
 
 The interface will use components of the Angular Material project
 
+References:
+
+- Oficial google maps component by the Angular contributors
+https://github.com/angular/components/tree/master/src/google-maps
+
+- Google Maps JavaScript API Guides & Reference
+https://developers.google.com/maps/documentation/javascript/overview
+
+
 //////////////////////////////////
 Frameworks and utilities vesions
 //////////////////////////////////
