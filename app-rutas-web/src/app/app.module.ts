@@ -8,9 +8,7 @@ import { AppComponent } from './app.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-//COmponentes Propios
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { MapComponent } from './components/map/map.component';
+
 
 //Modulos propios
 import { MaterialModule } from './material.module';
@@ -20,8 +18,7 @@ import { MaterialModule } from './material.module';
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
-    MapComponent
+    
   ],
   imports: [
     BrowserModule,

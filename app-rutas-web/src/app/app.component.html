@@ -1,5 +1,19 @@
-<app-sidebar class="sidebar">
-</app-sidebar>
-<div class="main-content">
-    <app-map class="mapa"></app-map>
+<div class="sidebar-container">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <span>Drone Route Planning Web App</span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+</div>
+<div class="mapa-container">
+    {{currentPath.getId()}}
+    <google-map width="800px" height="500px" [options]="options" (mapClick)="addWaypoint($event)">
+
+        <map-marker *ngFor=" let markerPosition of currentPathGoogle " [position]="markerPosition ">
+            <map-polyline [path]="currentPathGoogle "></map-polyline>
+        </map-marker>
+
+
+
+    </google-map>
 </div>
