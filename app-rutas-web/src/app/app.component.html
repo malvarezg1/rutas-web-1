@@ -5,8 +5,14 @@
         </mat-toolbar-row>
     </mat-toolbar>
 </div>
+
+
+
+<!--
+    
+-->
 <div class="mapa-container">
-    {{currentPath.getId()}}
+    {{currentPath.id}}
     <google-map width="800px" height="500px" [options]="options" (mapClick)="addWaypoint($event)">
 
         <map-marker *ngFor=" let markerPosition of currentPathGoogle " [position]="markerPosition ">
@@ -16,4 +22,8 @@
 
 
     </google-map>
+</div>
+
+<div id="test">
+
 </div>

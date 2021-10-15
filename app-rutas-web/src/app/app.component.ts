@@ -1,26 +1,33 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Path } from './classes/path.class';
 import { PathPoint } from './classes/pathpoint.class';
+import { RoutesService } from './services/data.service';
+
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent { 
-  
-  title = 'app-rutas-web';
+export class AppComponent implements OnInit{
 
+  
+  rutas: Path[] = [];  
   currentPath: Path;
-  currentPathGoogle: google.maps.LatLngLiteral[] = [];
-  
-  
+  currentPathGoogle: google.maps.LatLngLiteral[] = [];  
 
-  constructor(){            
+  constructor(public _routesService:RoutesService){            
 
-    this.currentPath = new Path(0, `PATH-${0}`,[]);   
+    this.rutas = this._routesService.getRutas();
+    this.currentPath = this.rutas[0];  
        
+  }
+
+  ngOnInit(): void {
+    
+    
   }
   
 
@@ -44,7 +51,7 @@ export class AppComponent {
    * @param id : id del pathpoint a editar su altura
    */
   editWaypointHeigth(height: number, id: number){
-    let point = this.currentPath.getWaypoints()[id];
+    let point = this.currentPath.path[id];
     point.setYAltitudez(height);
     this.currentPath.editPathPoint(id,point);
     //hay que actualizar el arreglo de puntos que entiende google: sincronizarlos
@@ -56,8 +63,8 @@ export class AppComponent {
    */
   updateGooglePath(){
     
-    for (let index = 0; index < this.currentPath.getWaypoints.length; index++) {
-      let currentPoint = this.currentPath.getWaypoints()[index];
+    for (let index = 0; index < this.currentPath.path.length; index++) {
+      let currentPoint = this.currentPath.path[index];
       let googlePoint = new google.maps.LatLng(currentPoint.getZLatitude(), currentPoint.getXLongitude());
       this.currentPathGoogle.push(googlePoint.toJSON());      
     }

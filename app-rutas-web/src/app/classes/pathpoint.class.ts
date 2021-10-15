@@ -1,63 +1,78 @@
 
+/**
+ * Clase que representa un pathpoint de una ruta
+ */
+export class PathPoint {   
 
-export class PathPoint{   
-
-    constructor(private id: number,
-                private ZLatitude: number,
-                private XLongitude: number,
-                private YAltitude: number,
-                private task: number = 0,
-                private instruction: string = ''
-    ){}
-
-    public getId():number {
-        return this.id;
+    /**
+     * crea un nuevo pathpoint
+     * @param id orden del pathpoint en la ruta
+     * @param ZLatitude latitud global del punto
+     * @param XLongitude longitud global del punto
+     * @param YAltitude  altura del punto en metros
+     * @param task (optional)id de la tarea asociadaa ese punto | 0: none | 1: photo | 2: video | 3: interval photo | 4: panoramic |
+     * @param instruction (optional)instruccion asociada a la tarea panoramica | 
+     */
+    constructor(public ID: number,                
+                public XLongitude: number,
+                public ZLatitude: number,
+                public YAltitude: number,
+                public task: number = 0,
+                public instruction: string ='' )
+    {
+        
     }
 
-    public setId(pId: number){
-        this.id = pId;
+    getId():number {
+        return this.ID;
     }
 
-    public getZLatitude():number{
+    setId(pId: number){
+        this.ID = pId;
+    }
+
+    getZLatitude():number{
         return this.ZLatitude;
     }
 
-    public setZLatitude(pZLatitude: number){
+    setZLatitude(pZLatitude: number){
         this.ZLatitude = pZLatitude;
     }
 
-    public getXLongitude():number{
+    getXLongitude():number{
         return this.XLongitude;
     }
 
-    public setpXLongitude(pXLongitude: number){
+    setpXLongitude(pXLongitude: number){
         this.XLongitude = pXLongitude;
         return this.YAltitude;
     }
 
-    public setYAltitudez(pYAltitude: number) {
+    setYAltitudez(pYAltitude: number) {
         this.YAltitude = pYAltitude;
     }
 
-    public getTask():number{
+    getTask(){
         return this.task;
     }
 
-    public setTask(pTask: number) {
+    setTask(pTask: number) {
         this.task = pTask;
     }
     
 
-    public getInstruction():string{
+    getInstruction(){
         return this.instruction;
     }
 
-    public setInstruction(pInstruction: string){
+    setInstruction(pInstruction: string){
         this.instruction = pInstruction;
     }
 
-    public toString():string{
-        return `waypoint:${this.id} |  lat:${this.ZLatitude} | lng:${this.XLongitude} | alt:${this.YAltitude} | task:${this.task} | instruction: ${this.instruction}|`
+    toString():string{
+        return `waypoint:${this.ID} |  lat:${this.ZLatitude} | lng:${this.XLongitude} | alt:${this.YAltitude} | task:${this.task} | instruction: ${this.instruction}|`
     }
     
 }
+
+
