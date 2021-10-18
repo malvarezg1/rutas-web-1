@@ -1,0 +1,17 @@
+.contenedor {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.map {
+    flex-basis: calc(70%);
+    height: 100%;
+}
+
+.sidebar {
+    flex-basis: calc(30%);
+    overflow: scroll;
+}

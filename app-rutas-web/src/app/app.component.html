@@ -6,24 +6,20 @@
     </mat-toolbar>
 </div>
 
+<div>
+    <router-outlet></router-outlet>
+</div>
 
 
 <!--
-    
--->
-<div class="mapa-container">
+    <div class="mapa-container">
     {{currentPath.id}}
     <google-map width="800px" height="500px" [options]="options" (mapClick)="addWaypoint($event)">
 
         <map-marker *ngFor=" let markerPosition of currentPathGoogle " [position]="markerPosition ">
             <map-polyline [path]="currentPathGoogle "></map-polyline>
         </map-marker>
-
-
-
     </google-map>
 </div>
-
-<div id="test">
-
-</div>
+    
+-->

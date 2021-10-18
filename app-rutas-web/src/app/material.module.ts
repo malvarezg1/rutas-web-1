@@ -8,6 +8,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 
@@ -16,14 +17,15 @@ import {MatListModule} from '@angular/material/list';
   imports: [
     CommonModule
   ],
-  //requiero exports pues es un modulo personalizado y sin esto no serian visibles sus componentes
+  //requiere exports pues es un modulo personalizado y sin esto no serian visibles a otros componentes
   exports:[
     MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatExpansionModule,
-    MatListModule
+    MatListModule,
+    MatStepperModule
   ]
 })
 export class MaterialModule { }

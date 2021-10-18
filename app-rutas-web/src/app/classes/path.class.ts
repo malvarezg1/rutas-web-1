@@ -2,16 +2,16 @@ import { PathPoint } from './pathpoint.class';
 /**
  * Clase que representa la planeacion de una ruta
  */
-
-
 export class Path {    
 
-    constructor(public id:number,
-                public description: string = `web:default description for PATH-${id}`,
-                public path: PathPoint[]=[])
-    {
-        
-    }
+    /**
+     * Inicializador de un objeto tipo Path
+     * @param description : descripcion opcional de los que hace la ruta
+     * @param PATH : listado de puntos
+     */
+    constructor(public description?: string,
+                public PATH: PathPoint[]=[])
+    {}
     
        
     /**
@@ -19,7 +19,7 @@ export class Path {
      * @param newPathPoint : nuevo pathpoint a agregar al final
      */
     addPathPoint(newPathPoint: PathPoint){
-        this.path.push(newPathPoint);
+        this.PATH.push(newPathPoint);
     }
 
     /**
@@ -28,7 +28,7 @@ export class Path {
      * @returns el pathpoint el la posicion i del arreglo
      */
     getPathPoint(i: number): PathPoint{
-        return this.path[i];
+        return this.PATH[i];
     }
 
     /** 
@@ -37,7 +37,7 @@ export class Path {
      * @param newWaypoint : pathpoint  a insertar en path[i]
      */
     editPathPoint(i: number, newWaypoint: PathPoint){
-        this.path[i] = newWaypoint;
+        this.PATH[i] = newWaypoint;
     }
 
     /**
@@ -45,7 +45,7 @@ export class Path {
      * @param i posicion a eliminar
      */
     removePathPoint(i: number){
-        this.path.splice(i,1);
+        this.PATH.splice(i,1);
     }
 
     /** 
@@ -53,8 +53,8 @@ export class Path {
      */
     toString(): string{
         let str = "";
-        for (let index = 0; index < this.path.length; index++) {
-            str += this.path[index].toString() + "\n";            
+        for (let index = 0; index < this.PATH.length; index++) {
+            str += this.PATH[index].toString() + "\n";            
         }
         str += "________________________________________";
         return str;        

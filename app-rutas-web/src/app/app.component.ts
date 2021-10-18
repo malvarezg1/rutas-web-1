@@ -15,13 +15,12 @@ export class AppComponent implements OnInit{
 
   
   rutas: Path[] = [];  
-  currentPath: Path;
+  currentPath: Path = new Path();
   currentPathGoogle: google.maps.LatLngLiteral[] = [];  
 
-  constructor(public _routesService:RoutesService){            
+  constructor(){            
 
-    this.rutas = this._routesService.getRutas();
-    this.currentPath = this.rutas[0];  
+   
        
   }
 
@@ -51,11 +50,9 @@ export class AppComponent implements OnInit{
    * @param id : id del pathpoint a editar su altura
    */
   editWaypointHeigth(height: number, id: number){
-    let point = this.currentPath.path[id];
-    point.setYAltitudez(height);
-    this.currentPath.editPathPoint(id,point);
-    //hay que actualizar el arreglo de puntos que entiende google: sincronizarlos
-    this.updateGooglePath();
+    let point = this.currentPath.PATH[id];
+    point.YAltitude=height;
+    this.currentPath.editPathPoint(id,point);   
   }
 
   /**
@@ -63,9 +60,9 @@ export class AppComponent implements OnInit{
    */
   updateGooglePath(){
     
-    for (let index = 0; index < this.currentPath.path.length; index++) {
-      let currentPoint = this.currentPath.path[index];
-      let googlePoint = new google.maps.LatLng(currentPoint.getZLatitude(), currentPoint.getXLongitude());
+    for (let index = 0; index < this.currentPath.PATH.length; index++) {
+      let currentPoint = this.currentPath.PATH[index];
+      let googlePoint = new google.maps.LatLng(currentPoint.ZLatitude, currentPoint.XLongitude);
       this.currentPathGoogle.push(googlePoint.toJSON());      
     }
        

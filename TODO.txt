@@ -1,0 +1,6 @@
+1.agregar la edicion de tareas
+con la logica de formularios asociada
+
+2. pagina de listado de rutas con botones a edicion, borrar y simular
+
+3. crear pagina de simulacion para mostrar animaciones usar AGM module
