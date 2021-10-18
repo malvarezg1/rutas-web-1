@@ -1,6 +1,16 @@
-1.agregar la edicion de tareas
+0. generar id de ruta al ser creada
+
+1. incluir funcion de edit y delete para rutas preexistentes
+
+2.agregar la edicion de tareas
 con la logica de formularios asociada
 
-2. pagina de listado de rutas con botones a edicion, borrar y simular
+3. pagina de listado de rutas con botones a edicion, borrar y simular
 
-3. crear pagina de simulacion para mostrar animaciones usar AGM module
+4. crear pagina de simulacion para mostrar animaciones usar AGM module
+
+5. mostrar cuadros de dialogo sobre marcadores en el mapa: orden y altura
+
+6. incluir opcion de arrastrar un waypoint, que se actualice su info y el polyline se redibuje
+
+7. incluir la opcion de borrar waypoint desde el formulario
