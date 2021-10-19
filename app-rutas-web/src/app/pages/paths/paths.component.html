@@ -28,7 +28,11 @@
                 <th class="text-left" scope="row">{{ids[i]}}</th>
                 <td class="text-center description">{{path.description}}</td>
                 <td class="text-center">{{path.PATH.length}}</td>
-                <td class="text-center">edit, delete, simulate</td>
+                <td class="text-center">
+                    <button class="btn" [routerLink]="['/path',ids[i]]"><mat-icon>edit</mat-icon></button>
+                    <button class="btn"><mat-icon>delete</mat-icon></button>
+                    <button class="btn"><mat-icon>play_circle_filled</mat-icon></button>
+                </td>
             </tr>
 
         </tbody>

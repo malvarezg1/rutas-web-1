@@ -13,9 +13,9 @@ export class PathPoint {
      * @param task (optional)id de la tarea asociadaa ese punto | 0: none | 1: photo | 2: video | 3: interval photo | 4: panoramic |
      * @param instruction (optional)instruccion asociada a la tarea panoramica | 
      */
-    constructor(public ID: number,                
-                public XLongitude: number,
-                public ZLatitude: number,
+    constructor(public ID: number,        
+                public ZLatitude: number,        
+                public XLongitude: number,                
                 public YAltitude: number = 0,
                 public task: number = 0,
                 public instruction: string ='' )

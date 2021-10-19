@@ -14,3 +14,5 @@ con la logica de formularios asociada
 6. incluir opcion de arrastrar un waypoint, que se actualice su info y el polyline se redibuje
 
 7. incluir la opcion de borrar waypoint desde el formulario
+
+8. agregar nombre de ciudad/sector a la tabla de planes de ruta

@@ -22,6 +22,7 @@ import {RoutesService} from './services/data.service';
 
 //Modulos propios
 import { MaterialModule } from './material.module';
+import { SimulationComponent } from './pages/simulation/simulation.component';
 
 
 
@@ -30,6 +31,7 @@ import { MaterialModule } from './material.module';
     AppComponent,
     PathComponent,
     PathsComponent,
+    SimulationComponent,
     
   ],
   imports: [

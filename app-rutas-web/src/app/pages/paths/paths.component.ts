@@ -4,7 +4,8 @@ import { Path } from '../../classes/path.class';
 
 @Component({
   selector: 'app-paths',
-  templateUrl: './paths.component.html'
+  templateUrl: './paths.component.html',
+  styleUrls: []
 
 })
 export class PathsComponent implements OnInit {
