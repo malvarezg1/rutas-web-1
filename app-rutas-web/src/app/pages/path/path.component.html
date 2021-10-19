@@ -24,7 +24,7 @@
 
                     <div class="form-group">
                         <label>Path ID <br><small>The unique identifier for the route plan</small></label>
-                        <input [(ngModel)]="id" name="id" type="number" class="form-control" placeholder="the path id" required>
+                        <input [(ngModel)]="id" name="id" type="text" class="form-control" placeholder="{{id}}">
                     </div>
 
                     <br>
@@ -36,9 +36,11 @@
                     </div>
 
                     <br>
+
                     <hr>
 
 
+                    <!-- panel contraido/expandido para listar los waypoints-->
                     <mat-accordion>
                         <mat-expansion-panel (opened)=true>
                             <mat-expansion-panel-header>
@@ -52,32 +54,44 @@
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
 
-                            <h5 class=" text-center ">Waypoints</h5>
+                            <div *ngIf="path.PATH.length==0">
+                                <h5 class=" text-center ">No waypoints asociated with the route yet</h5>
+                                <p class="text-center">add waypoints by clicking over the map</p>
+                            </div>
 
-                            <table class="table ">
-                                <thead>
-                                    <tr>
-                                        <th scope="col " class="text-center ">Order #</th>
-                                        <th scope="col " class="text-center ">latitude</th>
-                                        <th scope="col " class="text-center ">longitude</th>
-                                        <th scope="col " class="text-center ">height(m)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of path.PATH">
-                                        <th scope="row " class="text-center ">{{item.ID}}</th>
-                                        <td class="text-center ">{{item.ZLatitude}}</td>
-                                        <td class="text-center ">{{item.XLongitude}}</td>
-                                        <td class="text-center ">
-                                            <div class="form-group w-100 ">
-                                                <input type="number " class="form-control text-center " placeholder={{item.YAltitude}} [(ngModel)]="path.PATH[item.ID].YAltitude" name="path.PATH[item.ID].YAltitude">
-                                            </div>
-                                        </td>
-                                    </tr>
+                            <div *ngIf="path.PATH.length>0">
+                                <h5 class=" text-center ">Waypoints</h5>
 
-                                </tbody>
-                            </table>
+                                <table class="table ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col " class="text-center ">Order #</th>
+                                            <th scope="col " class="text-center ">latitude</th>
+                                            <th scope="col " class="text-center ">longitude</th>
+                                            <th scope="col " class="text-center ">height(m)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of path.PATH">
+                                            <th scope="row " class="text-center ">{{item.ID}}</th>
+                                            <td class="text-center ">{{item.ZLatitude}}</td>
+                                            <td class="text-center ">{{item.XLongitude}}</td>
+                                            <td class="text-center ">
+                                                <div class="form-group w-100 ">
+                                                    <input type="number " class="form-control text-center " placeholder={{item.YAltitude}} [(ngModel)]="path.PATH[item.ID].YAltitude" name="path.PATH[item.ID].YAltitude">
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </mat-expansion-panel>
+
+
+
+                        <!-- panel expandido/contraido  -->
                         <mat-expansion-panel (opened)=true>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
@@ -98,7 +112,7 @@
                     <hr>
 
                     <div class="form-group text-center ">
-                        <button class="btn btn-primary w-50 " type="submit ">
+                        <button mat-raised-button color="primary" class="w-50 " type="submit ">
                             <i class="fa fa-save "></i>
                             Submit
                         </button>

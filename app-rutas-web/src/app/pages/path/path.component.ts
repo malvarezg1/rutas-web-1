@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { Path } from 'src/app/classes/path.class';
 import { PathPoint } from '../../classes/pathpoint.class';
 import { RoutesService } from '../../services/data.service';
+import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-path',
@@ -90,12 +92,35 @@ export class PathComponent implements OnInit {
       console.log('Formulario no valido')
     }
 
-    this.id = 'PATH-' + this.id;
-    this.routesService.crearPath(this.path, this.id)
-      .subscribe(resp => console.log(resp));
+     Swal.fire({
+       title: 'Wait...',
+       text: 'Saving route info',
+       icon: 'info',
+       allowOutsideClick: false
+     });
 
-    console.log(form);
-    console.log(this.path)
+     Swal.showLoading();
+
+
+     let request : Observable<any>;
+
+
+
+    //this.id = 'PATH-' + this.id;
+    request = this.routesService.crearPath(this.path, this.id);
+      
+    request.subscribe( resp => {
+
+      Swal.fire({
+        title: this.id,
+        text: 'ruta guardada correctamente',
+        icon: 'success'
+        
+      });
+
+    })
+    // console.log(form);
+    // console.log(this.path)
   }
 
 

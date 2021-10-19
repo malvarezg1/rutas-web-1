@@ -16,17 +16,19 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Route id</th>
-                <th scope="col">Description</th>
-                <th scope="col">Actions</th>
+                <th class="text-left" scope="col">Route id</th>
+                <th class="text-center" scope="col">Description</th>
+                <th class="text-center" scope="col"># Waypoints</th>
+                <th class="text-center" scope="col">Actions</th>
 
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">#1</th>
-                <td>Here goes the description if exist</td>
-                <td>edit, delete, simulate</td>
+            <tr *ngFor="let path of paths; let i = index" [attr.data-index]="i">
+                <th class="text-left" scope="row">{{ids[i]}}</th>
+                <td class="text-center description">{{path.description}}</td>
+                <td class="text-center">{{path.PATH.length}}</td>
+                <td class="text-center">edit, delete, simulate</td>
             </tr>
 
         </tbody>
