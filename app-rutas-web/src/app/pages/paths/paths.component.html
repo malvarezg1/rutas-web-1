@@ -30,15 +30,15 @@
                 <td class="text-center">{{path.PATH.length}}</td>
                 <td class="text-center">
                     <button class="btn" [routerLink]="['/path',ids[i]]"><mat-icon>edit</mat-icon></button>
-                    <button class="btn"><mat-icon>delete</mat-icon></button>
-                    <button class="btn"><mat-icon>play_circle_filled</mat-icon></button>
+                    <button (click)="deletePath(path,ids[i])" class="btn"><mat-icon>delete</mat-icon></button>
+                    <button class="btn" [routerLink]="['/simulation',ids[i]]"><mat-icon>play_circle_filled</mat-icon></button>
                 </td>
             </tr>
 
         </tbody>
     </table>
 
-    <div class="alert alert-info text-center mt-3">
+    <div *ngIf="loading" class="alert alert-info text-center mt-3">
         <h4 class="alert-heading">Loading your plans</h4>
         <p>
             <i class="fa fa-sync-alt fa-spin fa-2x"></i>

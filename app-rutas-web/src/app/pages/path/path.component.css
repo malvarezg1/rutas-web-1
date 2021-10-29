@@ -13,5 +13,23 @@
 
 .sidebar {
     flex-basis: calc(40%);
-    overflow: scroll;
+    height: 100%;
+}
+
+.mitabla {
+    height: 300px;
+    overflow-y: auto;
+    /* Trigger vertical scroll    */
+    overflow-x: hidden;
+}
+
+.configuration-panel {
+    height: 100%;
+    overflow-y: auto;
+    /* Trigger vertical scroll    */
+    overflow-x: hidden;
+}
+
+.point-input {
+    display: inline;
 }

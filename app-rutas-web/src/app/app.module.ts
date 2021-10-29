@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+
+
 //Importacion de librerias/modulos externos
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,6 +51,6 @@ import { SimulationComponent } from './pages/simulation/simulation.component';
 })
 export class AppModule { 
 
-  public a: string[] = [];
+  
 
 }

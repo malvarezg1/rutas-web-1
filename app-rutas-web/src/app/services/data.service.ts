@@ -2,27 +2,30 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Path } from '../classes/path.class';
 import { PathPoint } from '../classes/pathpoint.class';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 
+
+/**
+ * Servicio para solicitar informacion desde la base de datos de rutas
+ */
 @Injectable({
     providedIn: 'root'
 })
 export class RoutesService {
 
-    
+    //direccion de la base de datos
     private url = 'https://drone-control-app.firebaseio.com';
 
-    constructor(private http: HttpClient){
-        
-    }
+    constructor(private http: HttpClient){}
 
     /**
-     * 
+     * crea/actualza un path de id especificado
      * @param path objeto que representa el plan de ruta
      * @param id identificador para guardarlo 
      * @returns response: del resultado de la operacion
      */
     putPath(path: Path, id: string){
+
         let jsonObj:any = {description: "", PATH: {} };
         
         //objeto tipo json con nombres de atributos acorde al esquema actual 
@@ -34,7 +37,7 @@ export class RoutesService {
         }
 
         //el id debe venir de la forma 'PATH-#' 
-        //es put pues nosotros queremos definir el id (autcalculado) pero no el que asign firebase a un nuevo registro
+        //es put pues nosotros queremos definir el id (autcalculado) y no el que asigna firebase a un nuevo registro (POST)
         return this.http.put(`${this.url}/${id}.json`, jsonObj)
         .pipe(
             map( (resp:any) => {                
@@ -45,6 +48,21 @@ export class RoutesService {
     }    
 
 
+    /**
+     * Elimina en la base de datos una ruta de id especificado 
+     * @param id identificador del id a eliminar
+     * @returns 
+     */
+    deletePath(id: string){
+        return this.http.delete(`${this.url}/${id}.json`);
+    }
+
+
+    /**
+     * retorna un objeto de tipo path que este representado en la base de datos como un registro de id especifuicado
+     * @param id id del objeto a buscar
+     * @returns el objeto con id especificado | un path vacio si no lo encuentra
+     */
     getPath(id: string){
        let path: Path = new Path();
        return this.http.get(`${this.url}/${id}.json`)
@@ -55,7 +73,12 @@ export class RoutesService {
               
     }
 
-    buildPath(pathObj: any){
+    /**
+     * desde un objeto Json construye un objeto Path para que cumpla con su estructura 
+     * @param pathObj 
+     * @returns 
+     */
+    private buildPath(pathObj: any){
         let path: Path = pathObj;
         //copia de la referencia al arreglo de puntos tipo Object
         let pointsObj: any = path.PATH;
@@ -78,7 +101,7 @@ export class RoutesService {
 
 
     /**
-     * 
+     * devuelve toda la lista de paths de la base de datos
      * @returns una lista de ids y uina lista de path
      * ambas listas se corresponden entre si
      * ids[i] es el indice o identificador para el path[i]
@@ -87,14 +110,15 @@ export class RoutesService {
         let paths: Path[] = [];
         return this.http.get(`${this.url}/.json`)
                     .pipe(
-                        map(this.buildArray)
+                        map(this.buildArray),                        
+                        delay(800)// solo con el fin de ver que carga
                     );
         
     }
 
     /**
      * Metodo soporte apra contruir el arreglo de respuesta a un GET de todas las rutas
-     * @param pathsObj objeto json que devuelve firebase
+     * @param pathsObj objeto json que devuelve firebase lista de PATH
      * @returns un arreglo con ids y objetos Path
      */
     private buildArray(pathsObj: any){
@@ -158,7 +182,7 @@ export class RoutesService {
 
 
     /**
-     * 
+     * Regresa el siguiente id libre para usar 
      * @returns number. con un id que no exista previamente
      */
      getNextId(){
@@ -172,7 +196,7 @@ export class RoutesService {
 
 
     /**
-     * 
+     * Metodo soporte para calcular el id libre
      * @param pathsObj objeto json con la respuesta del get
      * @returns un id libre que se puede usar para crear una nuevo path sin conflictos
      */
@@ -201,10 +225,5 @@ export class RoutesService {
     getCityPath(id:string){
         //TODO
     }
-
-   
-
-
-
     
 }

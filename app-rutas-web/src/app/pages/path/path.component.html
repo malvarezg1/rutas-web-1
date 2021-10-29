@@ -41,7 +41,7 @@
 
 
                     <!-- panel contraido/expandido para listar los waypoints-->
-                    <mat-accordion>
+                    <mat-accordion class="configuration-panel">
                         <mat-expansion-panel (opened)=true>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
@@ -59,25 +59,26 @@
                                 <p class="text-center">add waypoints by clicking over the map</p>
                             </div>
 
-                            <div *ngIf="path.PATH.length>0">
+                            <div *ngIf="path.PATH.length>0" class="mitabla">
                                 <h5 class=" text-center ">Waypoints</h5>
 
-                                <table class="table ">
+                                <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col " class="text-center ">Order #</th>
+                                            <th scope="col " class="text-center ">Order</th>
                                             <th scope="col " class="text-center ">Latitude</th>
                                             <th scope="col " class="text-center ">Longitude</th>
-                                            <th scope="col " class="text-center ">Height(m)</th>
+                                            <th scope="col " class="text-center ">Height</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let item of path.PATH">
-                                            <th scope="row " class="text-center ">{{item.ID}}</th>
-                                            <td class="text-center ">{{item.ZLatitude}}</td>
-                                            <td class="text-center ">{{item.XLongitude}}</td>
+                                            <th scope="row " class="text-center ">{{item.ID + 1}}</th>
+                                            <td class="text-center "> {{item.ZLatitude | number: '1.0-5'}}</td>
+                                            <td class="text-center "> {{item.XLongitude | number: '1.0-5'}}</td>
 
-                                            <td><input type="number" class="form-control text-center" [(ngModel)]="path.PATH[item.ID].YAltitude" name="{{item.ID}}" placeholder=""></td>
+                                            <td class="text-center ">{{path.PATH[item.ID].YAltitude}}m</td>
+                                            <!-- <td><input type="number" class="form-control text-center" [(ngModel)]="path.PATH[item.ID].YAltitude" name="{{item.ID}}" placeholder=""></td>-->
                                         </tr>
 
                                     </tbody>
@@ -100,6 +101,52 @@
                                 </mat-panel-description>
 
                             </mat-expansion-panel-header>
+
+
+                            <div *ngIf="path.PATH.length==0">
+                                <h5 class=" text-center ">No waypoints</h5>
+                                <p class="text-center">before configure camera tasks add waypoins to the route</p>
+                            </div>
+
+
+                            <div *ngIf="path.PATH.length>0" class="mitabla">
+                                <h5 class=" text-center ">Camera Tasks</h5>
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col " class="text-center ">#</th>
+                                            <th scope="col " class="text-center ">Height(m)</th>
+
+                                            <th scope="col " class="text-center "><i class="fa fa-camera"></i></th>
+                                            <th scope="col " class="text-center "><i class="fa fa-video"></i></th>
+                                            <th scope="col " class="text-center ">
+                                                <mat-icon> 360</mat-icon>
+
+                                            </th>
+                                            <th scope="col " class="text-center ">
+                                                <mat-icon> timer</mat-icon>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of path.PATH">
+                                            <th scope="row " class="text-center ">{{item.ID}}</th>
+                                            <td class="text-center ">{{item.YAltitude}} m</td>
+
+                                            <td class="text-center "><input type="checkbox" onclick=""></td>
+                                            <td class="text-center "><input type="checkbox" onclick=""></td>
+                                            <td class="text-center "><input type="checkbox" onclick=""></td>
+                                            <td class="text-center "><input type="checkbox" onclick=""></td>
+
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
 
                         </mat-expansion-panel>
                     </mat-accordion>
@@ -134,9 +181,27 @@
         <p>Seleccione en el mapa los waypoints a recorrer</p>
         <google-map width="auto" height="800px" [options]="options" (mapClick)="addWaypoint($event)">
 
-            <map-marker *ngFor=" let markerPosition of currentPathGoogle " [position]="markerPosition ">
+
+
+
+
+
+            <map-marker #marker="mapMarker" *ngFor=" let markerPosition of currentPathGoogle; let i = index " [position]="markerPosition " [label]="(i+1) + ''" (mapClick)="openInfoWindow(marker, i)">
                 <map-polyline [path]="currentPathGoogle "></map-polyline>
+                <map-info-window>
+                    <h5 class="text-center">Waypoint # {{path.PATH[i].ID + 1}}</h5>
+                    <div class="point-input">
+                        <p class="text-center"> height (m) : </p>
+                        <span><input type="number" class="form-control text-center" [(ngModel)]="path.PATH[i].YAltitude" name="{{i}}" placeholder=""></span>
+                    </div>
+
+                </map-info-window>
             </map-marker>
+
+
+
+
+
         </google-map>
     </div>
 </div>
