@@ -24,14 +24,14 @@
 
                     <div class="form-group">
                         <label>Path ID <br><small>The unique identifier for the route plan (auto-generated)</small></label>
-                        <input [(ngModel)]="id" name="id" type="text" class="form-control" placeholder="{{id}}" disabled>
+                        <input [(ngModel)]="id" name="id" type="text" class="form-control" placeholder="{{id}}" disabled ngDefaultControl>
                     </div>
 
                     <br>
 
                     <div class="form-group">
                         <label>description (optional) <br><small>A reminder about the details and purpose of the fligth plan</small></label>
-                        <textarea id="description" placeholder="this route is for ..." class="form-control" [(ngModel)]="path.description" name="description"></textarea>
+                        <textarea id="description" placeholder="this route is for ..." class="form-control" [(ngModel)]="path.description" name="description" ngDefaultControl></textarea>
 
                     </div>
 
@@ -40,116 +40,53 @@
                     <hr>
 
 
-                    <!-- panel contraido/expandido para listar los waypoints-->
-                    <mat-accordion class="configuration-panel">
-                        <mat-expansion-panel (opened)=true>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    List of Waypoints
-                                </mat-panel-title>
+                    <div *ngIf="path.PATH.length==0">
+                        <h5 class=" text-center ">No waypoints asociated with the route yet</h5>
+                        <p class="text-center">add waypoints by clicking over the map</p>
+                    </div>
 
-                                <mat-panel-description>
-                                    edit the waypoints of the route
+                    <div *ngIf="path.PATH.length>0" class="mitabla">
+                        <h5 class=" text-center ">Waypoints</h5>
 
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">Order</th>
+                                    <th scope="col" class="text-center">Latitude</th>
+                                    <th scope="col" class="text-center">Longitude</th>
+                                    <th scope="col" class="text-center">Height</th>
+                                    <th scope="col" class="text-center">Camera task</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of path.PATH">
+                                    <th scope="row " class="text-center ">{{item.ID + 1}}</th>
+                                    <td class="text-center "> {{ item.ZLatitude | number: '1.0-5' }}</td>
+                                    <td class="text-center "> {{ item.XLongitude | number: '1.0-5' }}</td>
+                                    <td class="text-center "> {{ path.PATH[item.ID].YAltitude }} m</td>
+                                    <td class="text-center">
 
-                            <div *ngIf="path.PATH.length==0">
-                                <h5 class=" text-center ">No waypoints asociated with the route yet</h5>
-                                <p class="text-center">add waypoints by clicking over the map</p>
-                            </div>
 
-                            <div *ngIf="path.PATH.length>0" class="mitabla">
-                                <h5 class=" text-center ">Waypoints</h5>
+                                        <i *ngIf="path.PATH[item.ID].task == 0" class="far fa-times-circle" title="NO camera task for this waypoint"></i>
 
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col " class="text-center ">Order</th>
-                                            <th scope="col " class="text-center ">Latitude</th>
-                                            <th scope="col " class="text-center ">Longitude</th>
-                                            <th scope="col " class="text-center ">Height</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of path.PATH">
-                                            <th scope="row " class="text-center ">{{item.ID + 1}}</th>
-                                            <td class="text-center "> {{item.ZLatitude | number: '1.0-5'}}</td>
-                                            <td class="text-center "> {{item.XLongitude | number: '1.0-5'}}</td>
+                                        <i *ngIf="path.PATH[item.ID].task == 1" class="fa fa-camera" title="take a picture at this waypoint"></i>
 
-                                            <td class="text-center ">{{path.PATH[item.ID].YAltitude}}m</td>
-                                            <!-- <td><input type="number" class="form-control text-center" [(ngModel)]="path.PATH[item.ID].YAltitude" name="{{item.ID}}" placeholder=""></td>-->
-                                        </tr>
+                                        <i *ngIf="path.PATH[item.ID].task == 2" class="fa fa-video" title="start recording video at this waypoint"></i>
 
-                                    </tbody>
-                                </table>
+                                        <i *ngIf="path.PATH[item.ID].task == 3" title="Take a 360 picture at this waypoint"><mat-icon>timer</mat-icon></i>
 
-                            </div>
-                        </mat-expansion-panel>
+                                        <i *ngIf="path.PATH[item.ID].task == 4" title="Take a 360 picture at this waypoint"><mat-icon>360</mat-icon></i>
 
 
 
-                        <!-- panel expandido/contraido  -->
-                        <mat-expansion-panel (opened)=true>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Camera Tasks
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    configure camera actions along the flight
+                                    </td>
+                                    <!-- <td><input type="number" class="form-control text-center" [(ngModel)]="path.PATH[item.ID].YAltitude" name="{{item.ID}}" placeholder=""></td>-->
+                                </tr>
 
-                                </mat-panel-description>
+                            </tbody>
+                        </table>
 
-                            </mat-expansion-panel-header>
-
-
-                            <div *ngIf="path.PATH.length==0">
-                                <h5 class=" text-center ">No waypoints</h5>
-                                <p class="text-center">before configure camera tasks add waypoins to the route</p>
-                            </div>
-
-
-                            <div *ngIf="path.PATH.length>0" class="mitabla">
-                                <h5 class=" text-center ">Camera Tasks</h5>
-
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col " class="text-center ">#</th>
-                                            <th scope="col " class="text-center ">Height(m)</th>
-
-                                            <th scope="col " class="text-center "><i class="fa fa-camera"></i></th>
-                                            <th scope="col " class="text-center "><i class="fa fa-video"></i></th>
-                                            <th scope="col " class="text-center ">
-                                                <mat-icon> 360</mat-icon>
-
-                                            </th>
-                                            <th scope="col " class="text-center ">
-                                                <mat-icon> timer</mat-icon>
-
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of path.PATH">
-                                            <th scope="row " class="text-center ">{{item.ID}}</th>
-                                            <td class="text-center ">{{item.YAltitude}} m</td>
-
-                                            <td class="text-center "><input type="checkbox" onclick=""></td>
-                                            <td class="text-center "><input type="checkbox" onclick=""></td>
-                                            <td class="text-center "><input type="checkbox" onclick=""></td>
-                                            <td class="text-center "><input type="checkbox" onclick=""></td>
-
-
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-                        </mat-expansion-panel>
-                    </mat-accordion>
+                    </div>
 
 
 
@@ -182,20 +119,72 @@
         <google-map width="auto" height="800px" [options]="options" (mapClick)="addWaypoint($event)">
 
 
+            <map-marker #marker="mapMarker" *ngFor=" let markerPosition of currentPathGoogle; let i = index " [position]="markerPosition " [label]="(i+1) + ''" (mapClick)="openInfoWindow(marker, i)" [options]="markerOptions[i]">
 
-
-
-
-            <map-marker #marker="mapMarker" *ngFor=" let markerPosition of currentPathGoogle; let i = index " [position]="markerPosition " [label]="(i+1) + ''" (mapClick)="openInfoWindow(marker, i)">
                 <map-polyline [path]="currentPathGoogle "></map-polyline>
+
                 <map-info-window>
                     <h5 class="text-center">Waypoint # {{path.PATH[i].ID + 1}}</h5>
                     <div class="point-input">
                         <p class="text-center"> height (m) : </p>
-                        <span><input type="number" class="form-control text-center" [(ngModel)]="path.PATH[i].YAltitude" name="{{i}}" placeholder=""></span>
+                        <mat-slider [vertical]="false" class="text-center" [(ngModel)]="path.PATH[i].YAltitude" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="1" min="5" max="100" aria-label="units" ngDefaultControl></mat-slider>
+
+
+                        <span><input type="number" matInput class="form-control text-center" [(ngModel)]="path.PATH[i].YAltitude" name="{{i+'h'}}" placeholder="" ngDefaultControl></span>
+
+                        <hr>
+
+
+                        <p class="text-center"> Camera Task: </p>
+
+                        <div class="botonorea-waypoint">
+
+                            <mat-form-field>
+                                <select matNativeControl nameclass="text-center form-control" [(ngModel)]="path.PATH[i].task" name="{{i + 't'}}">
+                                    <option  *ngFor="let task of tasks" [value]="task.value"  ngDefaultControl>
+                                    {{task.viewValue}}
+                                  </option>
+                                 </select>
+                            </mat-form-field>
+
+                            <i *ngIf="path.PATH[i].task == 0" class="far fa-times-circle text-center fa-2x" title="NO camera task for this waypoint"></i>
+
+                            <i *ngIf="path.PATH[i].task == 1" class="fa fa-camera text-center fa-2x" title="take a picture at this waypoint"></i>
+
+                            <i *ngIf="path.PATH[i].task == 2" class="fa fa-video text-center fa-2x" title="start recording video at this waypoint"></i>
+
+                            <i *ngIf="path.PATH[i].task == 3" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon>timer</mat-icon></i>
+
+                            <i *ngIf="path.PATH[i].task == 4" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon>360</mat-icon></i>
+
+                        </div>
+
+
+
+
+
+
+
+
+                        <br>
+
+                        <div class="botonorea-waypoint">
+                            <button mat-raised-button color="primary" class="w-80   ">
+                                save waypoint options
+                            </button>
+                            <button mat-raised-button color="red" class="w-20   ">
+                                <i class="fa fa-trash"></i>                                
+                            </button>
+
+                        </div>
+
+
                     </div>
 
                 </map-info-window>
+
+
+
             </map-marker>
 
 

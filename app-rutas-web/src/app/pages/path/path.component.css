@@ -7,12 +7,12 @@
 }
 
 .map {
-    flex-basis: calc(60%);
+    flex-basis: calc(70%);
     height: 100%;
 }
 
 .sidebar {
-    flex-basis: calc(40%);
+    flex-basis: calc(30%);
     height: 100%;
 }
 
@@ -32,4 +32,14 @@
 
 .point-input {
     display: inline;
+}
+
+.mat-slider {
+    width: 100%;
+}
+
+.botonorea-waypoint {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }

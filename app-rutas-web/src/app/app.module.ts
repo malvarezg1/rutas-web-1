@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-
-
 //Importacion de librerias/modulos externos
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,16 +13,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //Componentes 
 import { PathComponent } from './pages/path/path.component';
 import { PathsComponent } from './pages/paths/paths.component';
+import { SimulationComponent } from './pages/simulation/simulation.component';
 
 
-
-//Servicios
-
-import {RoutesService} from './services/data.service';
 
 //Modulos propios
 import { MaterialModule } from './material.module';
-import { SimulationComponent } from './pages/simulation/simulation.component';
 
 
 
