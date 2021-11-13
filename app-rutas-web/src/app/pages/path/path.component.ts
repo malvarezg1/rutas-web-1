@@ -176,7 +176,7 @@ export class PathComponent implements OnInit {
        }
      }
 
-     this.markerOptions.push(markerConfig);
+    this.markerOptions.push(markerConfig);
 
     this.currentPathGoogle.push(event.latLng.toJSON());
 
@@ -208,19 +208,28 @@ export class PathComponent implements OnInit {
    * @param height : altura nueva para el pathpoint
    * @param id : id del pathpoint a editar su altura
    */
-  editWaypointHeigth(height: number, id: number) {
-    let point = this.path.PATH[id];
-    point.YAltitude = height;
-    this.path.editPathPoint(id, point);
+  editWaypointHeigth(id: number, height: number) {
+    //this.path.PATH[0].ZLatitude = 1
+    let point =this.path.PATH[id]
+    //console.log("Test "+0)
+    //let aux = new PathPoint(0, point.ZLatitude, point.XLongitude, 1, point.task, point.instruction);
+    //point.YAltitude = height;
+    this.path.PATH[id] = new PathPoint(id, point.ZLatitude, point.XLongitude, height, point.task, point.instruction);
+    this.updateGooglePath()
   }
 
   /**
    * sincroniza el arreglo de Puntos del Path actual con respectp al arreglo de marcadores y confuguracion que entiende google
    */
   updateGooglePath() {
+    console.log('updateGooglePath')
+    let currentPathGoogleAux: google.maps.LatLngLiteral[] = []
+    this.currentPathGoogle = currentPathGoogleAux
+    let markerOptionsAux: google.maps.MarkerOptions[] = [];
+    this.markerOptions = markerOptionsAux
     for (let index = 0; index < this.path.PATH.length; index++) {
       let currentPoint = this.path.PATH[index];
-
+      console.log(currentPoint.YAltitude)
 
       //configurar color segun tarea
       let svgColor = "#000000";//negro para waypoints sin tareas
@@ -228,11 +237,6 @@ export class PathComponent implements OnInit {
       if(currentPoint.task == 2) svgColor = "red";
       if(currentPoint.task == 3) svgColor = "green";
       if(currentPoint.task == 4) svgColor = "yellow";
-
-
-
-
-
       //configurar la altura delmarcador segun altura del punto
       let altura = currentPoint.YAltitude;      
       //convencion: agregar un espacio al final de cada modificacion al svg
@@ -261,17 +265,10 @@ export class PathComponent implements OnInit {
           labelOrigin: new google.maps.Point(0, -(altura+2.2))//-(alturaSVG +2.5       
         }
       }
-
       this.markerOptions.push(markerConfig);
-
-
-
       let googlePoint = new google.maps.LatLng(currentPoint.ZLatitude, currentPoint.XLongitude);
       this.currentPathGoogle.push(googlePoint.toJSON());
-
-      
     }
-
   }
 
   updatePoint(index: number){
