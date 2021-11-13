@@ -186,7 +186,8 @@ export class PathComponent implements OnInit {
     let ZLatitude = event.latLng.lat();
     let XLongitude = event.latLng.lng();
     let newPathPoint = new PathPoint(this.currentPathGoogle.length - 1, ZLatitude, XLongitude, 10, 0, "");
-    this.path.addPathPoint(newPathPoint);   
+    this.path.PATH.push(newPathPoint);
+    //this.path.addPathPoint(newPathPoint);   
     
     
      
@@ -209,11 +210,7 @@ export class PathComponent implements OnInit {
    * @param id : id del pathpoint a editar su altura
    */
   editWaypointHeigth(id: number, height: number) {
-    //this.path.PATH[0].ZLatitude = 1
     let point =this.path.PATH[id]
-    //console.log("Test "+0)
-    //let aux = new PathPoint(0, point.ZLatitude, point.XLongitude, 1, point.task, point.instruction);
-    //point.YAltitude = height;
     this.path.PATH[id] = new PathPoint(id, point.ZLatitude, point.XLongitude, height, point.task, point.instruction);
     this.updateGooglePath()
   }
