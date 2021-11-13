@@ -124,11 +124,10 @@
                 <map-polyline [path]="currentPathGoogle "></map-polyline>
 
                 <map-info-window>
-                    {{path.PATH[i].ID}}
                     <h5 class="text-center">Waypoint # {{path.PATH[i].ID + 1}}</h5>
                     <div class="point-input">
                         <p class="text-center"> height (m) : </p>
-                        <mat-slider [vertical]="false" class="text-center" [(ngModel)]="path.PATH[i].YAltitude" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="1" min="5" max="100" aria-label="units" ngDefaultControl></mat-slider>
+                        <mat-slider [vertical]="false" class="text-center" [(ngModel)]="path.PATH[i].YAltitude" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="1" min="1" max="100" aria-label="units"></mat-slider>
 
 
                         <span><input id="{{path.PATH[i].ID}}" type="number" matInput class="form-control text-center" [(ngModel)]="path.PATH[i].YAltitude" name="{{i+'h'}}" placeholder="" ngDefaultControl ></span>
