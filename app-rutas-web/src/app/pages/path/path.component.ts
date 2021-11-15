@@ -15,7 +15,7 @@ import { QueryList } from '@angular/core';
   templateUrl: './path.component.html',
   styleUrls: ['./path.component.css']
 })
-export class PathComponent implements OnInit {
+export class PathComponent {
 
 
   //lista de identificadores para elementos MapInfoWindow
@@ -26,7 +26,7 @@ export class PathComponent implements OnInit {
   options: google.maps.MapOptions = {mapId: 'c7ed31fb07967124'} as google.maps.MapOptions;
 
 
-  //centro de vista general de la ciudad
+  //centro de vista general de la ciudad de Bogotá
   //centro del mapa por defecto si se esta creando una ruta nueva
   centerLatitude: number = 4.6491878;
   centerLongitude: number = -74.1335378;
@@ -44,11 +44,11 @@ export class PathComponent implements OnInit {
   //value es lo que se guarda como atrubuto
   //viewValue es lo que se muestra en pantalla y representa el valor 
   tasks: Task[] = [
-    {value: 0, viewValue: 'do nothing'},
-    {value: 1, viewValue: 'Take Picture'},
-    {value: 2, viewValue: 'Start video'},
-    {value: 3, viewValue: 'Start interval'},
-    {value: 4, viewValue: 'Take Panorama Picture'}
+    {value: '0', viewValue: 'do nothing'},
+    {value: '1', viewValue: 'Take Picture'},
+    {value: '2', viewValue: 'Start video'},
+    {value: '3', viewValue: 'Start interval'},
+    {value: '4', viewValue: 'Take Panorama Picture'}
   ];
 
   //listado de marcadores que guarda puntos que entiende el componente de mapas
@@ -118,10 +118,6 @@ export class PathComponent implements OnInit {
   }
 
 
-
-  ngOnInit(): void {}
-
-
   /**
    * funcion para abrir el marcador clickeado de manera dinamica (no todos las ventanas tienen los mismo)
    * @param marker 
@@ -142,17 +138,22 @@ export class PathComponent implements OnInit {
 
 
   /**
- * agrega un 
+ * agrega un waypoint al mapa y al objeto path
  * @param event evento e click sobre el mapa que guarda la latitud y longitud
  */
   addWaypoint(event: google.maps.MapMouseEvent) {
 
-     //configurar la altura delmarcador segun altura del punto
+     //configurar la altura delmarcador segun altura del punto, 10m por default
      let altura = 10;      
+
+     //Icono SVG definido por un string
      //convencion: agregar un espacio al final de cada modificacion al svg
      let svgPath = ""; //inicia en el punto (0, 0)
+
+
      //linea punteada
      let i = 0;
+
      while (i < altura) {
        svgPath += `M 0 -${i++} V -${i++} `; //dibuja una linea desde la ubicacion anterior (M 0 x) hasta (0 , i)
      }
@@ -163,9 +164,9 @@ export class PathComponent implements OnInit {
 
 
      let markerConfig = {
-       //draggable: true
+       draggable: true,
        anchorPoint: new google.maps.Point(0, -altura*3.4),// -y proporcional a la altura *3 o 3.5 más o menos    
-       animation: google.maps.Animation.DROP,
+       animation: google.maps.Animation.DROP, // solo cuando se agreag se hace esta animacion
        optimized: true,
        icon: {
          path: svgPath,
@@ -176,32 +177,19 @@ export class PathComponent implements OnInit {
        }
      }
 
-    this.markerOptions.push(markerConfig);
+    
+     //se agreag el punto a ambas representaciones
 
+    //waypint de google
+    this.markerOptions.push(markerConfig);
     this.currentPathGoogle.push(event.latLng.toJSON());
 
-
-    
-
+    //Waypoint logico
     let ZLatitude = event.latLng.lat();
     let XLongitude = event.latLng.lng();
-    let newPathPoint = new PathPoint(this.currentPathGoogle.length - 1, ZLatitude, XLongitude, 10, 0, "");
+    let newPathPoint = new PathPoint(this.currentPathGoogle.length - 1, ZLatitude, XLongitude, 10, '0', "");
     this.path.PATH.push(newPathPoint);
-    //this.path.addPathPoint(newPathPoint);   
     
-    
-     
-
-    
-
-    
-
-    //this.markerOptions.push(markerConfig);
-
-    
-    
-
-
   }
 
   /**
@@ -230,10 +218,10 @@ export class PathComponent implements OnInit {
 
       //configurar color segun tarea
       let svgColor = "#000000";//negro para waypoints sin tareas
-      if(currentPoint.task == 1) svgColor = "blue";
-      if(currentPoint.task == 2) svgColor = "red";
-      if(currentPoint.task == 3) svgColor = "green";
-      if(currentPoint.task == 4) svgColor = "yellow";
+      if(currentPoint.task == '1') svgColor = "blue";
+      if(currentPoint.task == '2') svgColor = "red";
+      if(currentPoint.task == '3') svgColor = "green";
+      if(currentPoint.task == '4') svgColor = "yellow";
       //configurar la altura delmarcador segun altura del punto
       let altura = currentPoint.YAltitude;      
       //convencion: agregar un espacio al final de cada modificacion al svg
@@ -250,9 +238,8 @@ export class PathComponent implements OnInit {
 
 
       let markerConfig = {
-        //draggable: true
+        draggable: true,
         anchorPoint: new google.maps.Point(0, -altura*3.2),// -y proporcional a la altura *3 o 3.5 más o menos    
-        animation: google.maps.Animation.DROP,
         optimized: true,
         icon: {
           path: svgPath,
@@ -268,26 +255,12 @@ export class PathComponent implements OnInit {
     }
   }
 
-  updatePoint(index: number){
-
-    
-  }
-
- 
-
-  
-
- 
-
-
 
   /**
    * salvar los datos de campos y enviar al servicio el objeto a escribir
    * @param form 
    */
-  save(form: NgForm) {
-
-    
+  save(form: NgForm) {    
 
 
     if (form.invalid) {
@@ -329,34 +302,12 @@ export class PathComponent implements OnInit {
    */
   formatLabel(value: number) {
     return value + 'm';
-  }
-  
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
+  } 
 
 }
 
 
 interface Task {
-  value: number;
+  value: string;
   viewValue: string;
 }

@@ -17,13 +17,16 @@ export class PathPoint {
                 public ZLatitude: number,        
                 public XLongitude: number,                
                 public YAltitude: number = 0,
-                public task: number = 0,
+                public task: string = '0',
                 public instruction: string ='' )
     {
         
     }
 
-
+    /**
+     * 
+     * @returns Representacion string deun objeto pahtpoint 
+     */    
     toString():string{
         return `waypoint:${this.ID} |  lat:${this.ZLatitude} | lng:${this.XLongitude} | alt:${this.YAltitude} | task:${this.task} | instruction: ${this.instruction}|`
     }

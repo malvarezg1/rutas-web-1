@@ -67,15 +67,15 @@
                                     <td class="text-center">
 
 
-                                        <i *ngIf="path.PATH[item.ID].task == 0" class="far fa-times-circle" title="NO camera task for this waypoint"></i>
+                                        <i *ngIf="path.PATH[item.ID].task == '0'" class="far fa-times-circle" title="NO camera task for this waypoint"></i>
 
-                                        <i *ngIf="path.PATH[item.ID].task == 1" class="fa fa-camera" title="take a picture at this waypoint"></i>
+                                        <i *ngIf="path.PATH[item.ID].task == '1'" class="fa fa-camera" title="take a picture at this waypoint"></i>
 
-                                        <i *ngIf="path.PATH[item.ID].task == 2" class="fa fa-video" title="start recording video at this waypoint"></i>
+                                        <i *ngIf="path.PATH[item.ID].task == '2'" class="fa fa-video" title="start recording video at this waypoint"></i>
 
-                                        <i *ngIf="path.PATH[item.ID].task == 3" title="Take a 360 picture at this waypoint"><mat-icon>timer</mat-icon></i>
+                                        <i *ngIf="path.PATH[item.ID].task == '3'" title="Take a 360 picture at this waypoint"><mat-icon>timer</mat-icon></i>
 
-                                        <i *ngIf="path.PATH[item.ID].task == 4" title="Take a 360 picture at this waypoint"><mat-icon>360</mat-icon></i>
+                                        <i *ngIf="path.PATH[item.ID].task == '4'" title="Take a 360 picture at this waypoint"><mat-icon>360</mat-icon></i>
 
 
 
@@ -147,15 +147,15 @@
                                  </select>
                             </mat-form-field>
 
-                            <i *ngIf="path.PATH[i].task == 0" class="far fa-times-circle text-center fa-2x" title="NO camera task for this waypoint"></i>
+                            <i *ngIf="path.PATH[i].task == '0'" class="far fa-times-circle text-center fa-2x" title="NO camera task for this waypoint"></i>
 
-                            <i *ngIf="path.PATH[i].task == 1" class="fa fa-camera text-center fa-2x" title="take a picture at this waypoint"></i>
+                            <i *ngIf="path.PATH[i].task == '1'" class="fa fa-camera text-center fa-2x" title="take a picture at this waypoint"></i>
 
-                            <i *ngIf="path.PATH[i].task == 2" class="fa fa-video text-center fa-2x" title="start recording video at this waypoint"></i>
+                            <i *ngIf="path.PATH[i].task == '2'" class="fa fa-video text-center fa-2x" title="start recording video at this waypoint"></i>
 
-                            <i *ngIf="path.PATH[i].task == 3" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon>timer</mat-icon></i>
+                            <i *ngIf="path.PATH[i].task == '3'" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon>timer</mat-icon></i>
 
-                            <i *ngIf="path.PATH[i].task == 4" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon>360</mat-icon></i>
+                            <i *ngIf="path.PATH[i].task == '4'" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon>360</mat-icon></i>
 
                         </div>
 
