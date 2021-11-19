@@ -6,4 +6,4 @@
 
 5 Paginacion, no cargar todas las rutas de una sola vez. 
 
-6 que el dron pare y haga delay en algunos
+6 que el dron pare y haga delay los waypoints donde hay una tarea asociada
