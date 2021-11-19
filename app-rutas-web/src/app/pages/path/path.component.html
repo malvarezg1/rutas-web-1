@@ -37,6 +37,10 @@
 
                     <br>
 
+
+
+
+
                     <hr>
 
 
@@ -115,9 +119,16 @@
 
     <div class="map">
 
-        <p>Seleccione en el mapa los waypoints a recorrer</p>
+        <p>Select over the map the waypoints for the drone to travel</p>
+        <button mat-raised-button color="primary" class="w-10" (click)="startSimulation(0)">       
+            Simulate route               
+            <mat-icon>play_circle_filled</mat-icon>
+        </button>
         <google-map width="auto" height="800px" [options]="options" (mapClick)="addWaypoint($event)">
 
+            <map-marker *ngFor=" let markerPosition of guidePathGoogle; let j = index " [position]="markerPosition " [options]="guideMarkerOptions[j]">
+
+            </map-marker>
 
             <map-marker #marker="mapMarker" *ngFor=" let markerPosition of currentPathGoogle; let i = index " [position]="markerPosition " [label]="(i+1) + ''" (mapClick)="openInfoWindow(marker, i)" [options]="markerOptions[i]">
 
@@ -169,11 +180,11 @@
                         <br>
 
                         <div class="botonorea-waypoint">
-                            <button mat-raised-button color="primary" class="w-80  " (click)="editWaypointHeigth(path.PATH[i].ID, path.PATH[i].YAltitude )">
+                            <button mat-raised-button color="primary" class="w-80 " (click)="editWaypointHeigth(path.PATH[i].ID, path.PATH[i].YAltitude )">
                                 save waypoint options
                             </button>
-                            <button mat-raised-button color="red" class="w-20   ">
-                                <i class="fa fa-trash"></i>                                
+                            <button mat-raised-button color="red" class="w-20" (click)="this.deleteWaypoint(path.PATH[i].ID)">
+                                <i class="fa fa-trash" ></i>                                
                             </button>
 
                         </div>

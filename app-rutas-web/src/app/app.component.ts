@@ -1,9 +1,5 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Path } from './classes/path.class';
-import { PathPoint } from './classes/pathpoint.class';
-import { RoutesService } from './services/data.service';
-
 
 
 @Component({

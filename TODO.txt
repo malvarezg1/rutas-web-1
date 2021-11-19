@@ -1,11 +1,9 @@
 0 sort the rutas y sort de waypoints por id number
 
-1 crear pagina de simulacion para mostrar animaciones usar AGM module
-
 2 incluir opcion de arrastrar un waypoint, que se actualice su info y el polyline se redibuje
 
-3 incluir la opcion de borrar waypoint desde el formulario
-
-4 agregar nombre de ciudad/sector a la tabla de planes de ruta
+3 incluir la opcion de borrar waypoint desde el formulario, por ahora solo funciona eliminar el ultimo, crashea en inicial o intermedios
 
 5 Paginacion, no cargar todas las rutas de una sola vez. 
+
+6 que el dron pare y haga delay en algunos

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import {MapInfoWindow, MapMarker} from '@angular/google-maps';
 import { QueryList } from '@angular/core';
+import { delay } from 'rxjs/operators';
 
 
 @Component({
@@ -60,6 +61,18 @@ export class PathComponent {
   markerOptions: google.maps.MarkerOptions[] = [];
 
   
+  //lista de marcadores intermedios no interactivos que sirven como guia de recorrido entre waypoints
+  guidePathGoogle: google.maps.LatLngLiteral[] = [];
+
+  
+  //lista de configuracion de los marcadores intermedios segun su altura 
+  guideMarkerOptions: google.maps.MarkerOptions[] = [];
+
+
+  alturasIntermedias: number[] =[];
+
+
+  
   
   
 
@@ -77,7 +90,6 @@ export class PathComponent {
           this.id = 'PATH-' + resp;
 
         });
-
       // se ubica el mapa sobre una vista general de bogota
       this.options = {
         center: { lat: this.centerLatitude, lng: this.centerLongitude },
@@ -141,35 +153,19 @@ export class PathComponent {
  * agrega un waypoint al mapa y al objeto path
  * @param event evento e click sobre el mapa que guarda la latitud y longitud
  */
-  addWaypoint(event: google.maps.MapMouseEvent) {
+  addWaypoint(event: google.maps.MapMouseEvent) {   
+
 
      //configurar la altura delmarcador segun altura del punto, 10m por default
      let altura = 10;      
 
-     //Icono SVG definido por un string
-     //convencion: agregar un espacio al final de cada modificacion al svg
-     let svgPath = ""; //inicia en el punto (0, 0)
-
-
-     //linea punteada
-     let i = 0;
-
-     while (i < altura) {
-       svgPath += `M 0 -${i++} V -${i++} `; //dibuja una linea desde la ubicacion anterior (M 0 x) hasta (0 , i)
-     }
-     svgPath += `M 0 -${altura}`;
-     //agregar punta de marcador
-     svgPath += `L 2 -${altura + 2} L 0 -${altura + 4} L -2 -${altura + 2} L 0 -${altura}`;
-
-
-
      let markerConfig = {
-       draggable: true,
+       //draggable: true,
        anchorPoint: new google.maps.Point(0, -altura*3.4),// -y proporcional a la altura *3 o 3.5 más o menos    
        animation: google.maps.Animation.DROP, // solo cuando se agreag se hace esta animacion
        optimized: true,
        icon: {
-         path: svgPath,
+         path: this.getSvgPathMarker(altura),
          strokeColor: "#000000",
          strokeWeight: 3,
          scale: 6,
@@ -180,15 +176,92 @@ export class PathComponent {
     
      //se agreag el punto a ambas representaciones
 
-    //waypint de google
     this.markerOptions.push(markerConfig);
     this.currentPathGoogle.push(event.latLng.toJSON());
 
     //Waypoint logico
     let ZLatitude = event.latLng.lat();
     let XLongitude = event.latLng.lng();
-    let newPathPoint = new PathPoint(this.currentPathGoogle.length - 1, ZLatitude, XLongitude, 10, '0', "");
-    this.path.PATH.push(newPathPoint);
+    let nextPoint = new PathPoint(this.currentPathGoogle.length - 1, ZLatitude, XLongitude, 10, '0', "");
+    this.path.PATH.push(nextPoint);
+
+
+
+    if(this.path.PATH.length > 1){
+    //waypint de google
+    
+
+    let copy_path = this.path.PATH;
+
+    let currentPoint = copy_path[copy_path.length -2];
+
+    
+
+    //
+    let punto_1 = new google.maps.LatLng(currentPoint.ZLatitude, currentPoint.XLongitude);
+    let punto_2 = new google.maps.LatLng(nextPoint.ZLatitude, nextPoint.XLongitude);
+
+        //distancia en metros de los dos puntos
+        let distance = this.getDistance(punto_1,punto_2);       
+
+        
+
+           
+
+        //la distancia y la diferencia de altura tambien son los dos factores para definir la variacion progresiva de altura de los iconos
+        let dif_altura = Math.abs(currentPoint.YAltitude - nextPoint.YAltitude);
+
+        //usar la distancia como un factor para calcular el numero de iconos elevados a generar
+           
+        let numIconos = Math.round((distance+dif_altura)*0.25);
+
+        let puntos = this.getPuntosIntermedios(numIconos, punto_1, punto_2);     
+
+       
+        // 0 si las alturas son iguales, 1 si sube y -1 si deciende
+        let direccion = currentPoint.YAltitude < nextPoint.YAltitude? 1 : currentPoint.YAltitude > nextPoint.YAltitude? -1: 0 ;
+
+        //avance en el cambio de altura
+        let delta = Math.round(dif_altura/numIconos) * direccion;
+
+       
+        let alturaOrigen = currentPoint.YAltitude;   
+        
+        for (let k = 0; k < puntos.length; k++) {
+
+          console.log("entra loop")
+
+          this.guidePathGoogle.push(puntos[k].toJSON());    
+          
+          //configuracion del marcador agregado
+
+          let str =  `M 0 -${alturaOrigen} L 0.25 -${alturaOrigen} M 0 -${alturaOrigen} L 0 -${alturaOrigen + 0.25} M 0 -${alturaOrigen} L 0 -${alturaOrigen-0.25} M 0 -${alturaOrigen} L -0.25 -${alturaOrigen}`;      
+
+          let intermediateMarkerConfig = {
+            //draggable: true
+            anchorPoint: new google.maps.Point(0, -alturaOrigen*3.4),// -y proporcional a la altura *3 o 3.5 más o menos            
+            optimized: true,
+            icon: {
+              path: str,
+              strokeColor: "#7a7a7a",
+              strokeWeight: 1,
+              scale: 6                   
+            }
+            
+          }
+
+          this.guideMarkerOptions.push(intermediateMarkerConfig);
+
+          this.alturasIntermedias.push(alturaOrigen);
+          alturaOrigen += delta;     
+     
+          
+        }
+      }
+
+
+    //no requiere invocar updateGooglePath solo se estan haciendo cambios al agregar informacion al final del arreglo
+    
     
   }
 
@@ -200,8 +273,23 @@ export class PathComponent {
   editWaypointHeigth(id: number, height: number) {
     let point =this.path.PATH[id]
     this.path.PATH[id] = new PathPoint(id, point.ZLatitude, point.XLongitude, height, point.task, point.instruction);
-    this.updateGooglePath()
+    this.guideMarkerOptions = [];
+    this.guidePathGoogle = [];
+    this.alturasIntermedias = [];
+    this.updateGooglePath();    
   }
+
+  deleteWaypoint(id: number){
+    this.path.PATH.splice(id,1);   //revisar metodo redimencionar, hay que ajustar ids del arreglo despues de eliminar un elemento inicial o intermedio
+    this.currentPathGoogle = []
+    this.guidePathGoogle = []
+    this.markerOptions = []
+    this.alturasIntermedias = []
+    this.guideMarkerOptions = []    
+    this.updateGooglePath();
+  }
+
+
 
   /**
    * sincroniza el arreglo de Puntos del Path actual con respectp al arreglo de marcadores y confuguracion que entiende google
@@ -222,27 +310,16 @@ export class PathComponent {
       if(currentPoint.task == '2') svgColor = "red";
       if(currentPoint.task == '3') svgColor = "green";
       if(currentPoint.task == '4') svgColor = "yellow";
+
       //configurar la altura delmarcador segun altura del punto
       let altura = currentPoint.YAltitude;      
-      //convencion: agregar un espacio al final de cada modificacion al svg
-      let svgPath = ""; //inicia en el punto (0, 0)
-      //linea punteada
-      let i = 0;
-      while (i < altura) {
-        svgPath += `M 0 -${i++} V -${i++} `; //dibuja una linea desde la ubicacion anterior (M 0 x) hasta (0 , i)
-      }
-      svgPath += `M 0 -${altura}`;
-      //agregar punta de marcador
-      svgPath += `L 2 -${altura + 2} L 0 -${altura + 4} L -2 -${altura + 2} L 0 -${altura}`;
-
-
 
       let markerConfig = {
-        draggable: true,
+        //draggable: true, //not supported yet 
         anchorPoint: new google.maps.Point(0, -altura*3.2),// -y proporcional a la altura *3 o 3.5 más o menos    
         optimized: true,
         icon: {
-          path: svgPath,
+          path: this.getSvgPathMarker(altura),
           strokeColor: svgColor,
           strokeWeight: 3,
           scale: 6,
@@ -252,6 +329,98 @@ export class PathComponent {
       this.markerOptions.push(markerConfig);
       let googlePoint = new google.maps.LatLng(currentPoint.ZLatitude, currentPoint.XLongitude);
       this.currentPathGoogle.push(googlePoint.toJSON());
+
+
+      //crean marcadores guia entre el punto actual y el siguiente
+      //TODO: optimizar codigo: muchas variables intermedias
+      //evitar creacion de variables dentro de los loops y reutilzar informacion entre iteraciones
+      //simplificar calculos y reutilzar referencais a valores usados varias veces
+      if(index != this.path.PATH.length -1 ){ // si no es el ultimo
+
+        let nextPoint = this.path.PATH[index+1];
+
+        let punto_1 = new google.maps.LatLng(currentPoint.ZLatitude, currentPoint.XLongitude);
+        let punto_2 = new google.maps.LatLng(nextPoint.ZLatitude, nextPoint.XLongitude);
+
+        //distancia en metros de los dos puntos
+        let distance = this.getDistance(punto_1,punto_2);       
+
+        
+              
+
+        //la distancia y la diferencia de altura tambien son los dos factores para definir la variacion progresiva de altura de los iconos
+        let dif_altura = Math.abs(currentPoint.YAltitude - nextPoint.YAltitude);
+
+        //usar la distancia como un factor para calcular el numero de iconos elevados a generar
+        //let numIconos = Math.round(distance/3);//¿por cada 3 mestros hay un icono?        
+        let numIconos = Math.round((distance+dif_altura)*0.25);
+
+        let puntos = this.getPuntosIntermedios(numIconos, punto_1, punto_2);  
+
+
+       
+        // 0 si las alturas son iguales, 1 si sube y -1 si deciende
+        let direccion = currentPoint.YAltitude < nextPoint.YAltitude? 1 : currentPoint.YAltitude > nextPoint.YAltitude? -1: 0 ;
+
+        //avance en el cambio de altura
+        let delta = Math.round(dif_altura/numIconos) * direccion;
+
+       
+        let alturaOrigen = currentPoint.YAltitude;   
+        
+        for (let k = 0; k < puntos.length; k++) {
+
+          this.guidePathGoogle.push(puntos[k].toJSON());    
+          
+          //configuracion del marcador agregado
+
+          let str =  `M 0 -${alturaOrigen} L 0.25 -${alturaOrigen} M 0 -${alturaOrigen} L 0 -${alturaOrigen + 0.25} M 0 -${alturaOrigen} L 0 -${alturaOrigen-0.25} M 0 -${alturaOrigen} L -0.25 -${alturaOrigen}`;      
+
+          let intermediateMarkerConfig = {
+            //draggable: true
+            anchorPoint: new google.maps.Point(0, -alturaOrigen*3.4),// -y proporcional a la altura *3 o 3.5 más o menos            
+            optimized: true,
+            icon: {
+              path: str,
+              strokeColor: "#7a7a7a",
+              strokeWeight: 1,
+              scale: 6                   
+            }
+            
+          }
+
+          this.guideMarkerOptions.push(intermediateMarkerConfig);
+
+          this.alturasIntermedias.push(alturaOrigen);
+          alturaOrigen += delta;     
+     
+          
+        }
+
+
+
+        
+       
+
+
+
+
+
+      
+        
+
+        
+
+        
+
+
+
+
+
+
+      }
+
+
     }
   }
 
@@ -294,6 +463,85 @@ export class PathComponent {
     
   }
 
+  async startSimulation(index: number){
+
+    if(index < this.alturasIntermedias.length){
+
+      if(index>=1){//quitar el icono anterior
+
+        let alturaAnterior = this.alturasIntermedias[index-1];
+
+        let str =  `M 0 -${alturaAnterior} L 0.25 -${alturaAnterior} M 0 -${alturaAnterior} L 0 -${alturaAnterior + 0.25} M 0 -${alturaAnterior} L 0 -${alturaAnterior-0.25} M 0 -${alturaAnterior} L -0.25 -${alturaAnterior}`;      
+
+        let intermediateMarkerConfig = {
+          //draggable: true
+          anchorPoint: new google.maps.Point(0, -alturaAnterior*3.4),// -y proporcional a la altura *3 o 3.5 más o menos            
+          optimized: true,
+          icon: {
+            path: str,
+            strokeColor: "#7a7a7a",
+            strokeWeight: 1,
+            scale: 6                   
+          }
+          
+        }
+
+        this.guideMarkerOptions[index-1] = intermediateMarkerConfig
+
+      }
+
+      let intermediateMarkerConfig: google.maps.MarkerOptions = {
+        //draggable: true
+        anchorPoint: new google.maps.Point(0, -this.alturasIntermedias[index]*3.4),// -y proporcional a la altura *3 o 3.5 más o menos            
+        optimized: true,
+        icon: {
+          path: this.getSVGdrone(this.alturasIntermedias[index]),
+          strokeColor: "#000000",
+          strokeWeight: 5,
+          scale: 6            
+        }
+        
+      }
+
+      this.guideMarkerOptions[index] = intermediateMarkerConfig;
+
+      function sleep(ms:number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+  
+      console.log("inicia espera")
+      await sleep(500);
+      console.log("inicia espera")
+      index++;
+
+      this.startSimulation(index);
+
+      if(index == this.alturasIntermedias.length){
+        
+        await sleep(1000);
+        alert("Simulacion finalizada");                
+        this.updateGooglePath();
+      }
+
+     
+
+      
+      
+
+      
+      
+
+      
+
+    }
+
+   
+    
+    
+  }
+
+  
 
   /**
    * formato para el label del slider que modifica la altura de un waypoint
@@ -303,6 +551,87 @@ export class PathComponent {
   formatLabel(value: number) {
     return value + 'm';
   } 
+
+  /**
+   * configurar la altura delmarcador segun altura del punto
+   * @param altura
+   * @returns svgPathSymbol
+   */
+   getSvgPathMarker(altura: number){    
+    //convencion: agregar un espacio al final de cada modificacion al svg
+    let svgPath = ""; //inicia en el punto (0, 0)
+    //linea punteada
+    let i = 0;
+    while (i < altura) {
+      svgPath += `M 0 -${i++} V -${i++} `; //dibuja una linea desde la ubicacion anterior (M 0 x) hasta (0 , i)
+    }
+    svgPath += `M 0 -${altura}`;
+    //agregar punta de marcador
+    svgPath += `L 2 -${altura + 2} L 0 -${altura + 4} L -2 -${altura + 2} L 0 -${altura}`;
+
+    console.log(svgPath);
+    return svgPath;
+
+  }
+
+  getSVGdrone(altura: number):string{
+    return `M 0 -${altura} Q 0 -${altura+1} 1 -${altura+1} Q 0 -${altura+1} 0 -${altura+2} Q 0 -${altura+1} -1 -${altura+1} Q 0 -${altura+1} 0 -${altura}`;
+  }
+
+
+  rad(x:number) {
+    return x * Math.PI / 180;
+  };
+  
+  getDistance(p1: google.maps.LatLng , p2: google.maps.LatLng) {
+    var R = 6378137; // Earth’s mean radius in meter
+    var dLat = this.rad(p2.lat() - p1.lat());
+    var dLong = this.rad(p2.lng() - p1.lng());
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.rad(p1.lat())) * Math.cos(this.rad(p2.lat())) *
+      Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d; // returns the distance in meter
+  };
+
+  
+  /**
+   * retorna un numero de puntos LatLng ente dos puntos espedificos
+   * puntos extremos no inclusivos
+   * @param cantidad cantidad de puntos intermedios a calcular
+   * @param punto1 
+   * @param punto2 
+   * @returns arreglo de puntos LatLng de tamanio <cantidad>
+   */
+  getPuntosIntermedios(cantidad: number,                       
+                       punto1: google.maps.LatLng,
+                       punto2: google.maps.LatLng)
+                       :google.maps.LatLng[]{
+
+    //pendiente de la funcion
+    let m = (punto2.lng() - punto1.lng())/(punto2.lat() - punto1.lat());
+    
+    let newLng = (pLat:number) => {
+      // y(x) = m(x - x0) + y0
+      return m*(pLat-punto1.lat()) + punto1.lng()
+    }
+
+    let puntos = new Array<google.maps.LatLng>();
+
+    let difLat = punto2.lat() - punto1.lat();
+
+    let avance = difLat/(cantidad + 1);
+
+    let newLat = punto1.lat();
+    for (let k = 0; k < cantidad; k++) {
+      newLat += avance;
+      puntos.push(new google.maps.LatLng(newLat, newLng(newLat)));            
+    }  
+
+    return puntos;
+
+  }
 
 }
 

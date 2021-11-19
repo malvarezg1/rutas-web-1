@@ -74,4 +74,8 @@ export class PathsComponent implements OnInit {
 
   }
 
+  integerParser(str: string){
+    return parseInt(str);
+  }
+
 }

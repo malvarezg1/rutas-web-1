@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //Componentes 
 import { PathComponent } from './pages/path/path.component';
 import { PathsComponent } from './pages/paths/paths.component';
-import { SimulationComponent } from './pages/simulation/simulation.component';
+
 
 
 
@@ -26,8 +26,8 @@ import { MaterialModule } from './material.module';
   declarations: [
     AppComponent,
     PathComponent,
-    PathsComponent,
-    SimulationComponent,
+    PathsComponent
+    
     
   ],
   imports: [

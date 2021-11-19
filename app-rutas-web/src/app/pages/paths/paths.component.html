@@ -26,14 +26,14 @@
         </thead>
         <tbody>
             <tr *ngFor="let path of paths; let i = index" [attr.data-index]="i">
-                <th class="text-left" scope="row">{{ids[i]}}</th>
-                <td class="text-center description">{{path.description}}</td>
-                <td class="text-center"> . </td>
-                <td class="text-center">{{path.PATH.length}}</td>
-                <td class="text-center">
+                <th class="text-left" scope="row" *ngIf="this.integerParser(ids[i].split('-')[1]) >= 97">{{ids[i]}}</th>
+                <td class="text-center description" *ngIf="this.integerParser(ids[i].split('-')[1])  >= 97">{{path.description}}</td>
+                <td class="text-center" *ngIf="this.integerParser(ids[i].split('-')[1])  >= 97"> . </td>
+                <td class="text-center" *ngIf="this.integerParser(ids[i].split('-')[1])  >= 97">{{path.PATH.length}}</td>
+                <td class="text-center" *ngIf="this.integerParser(ids[i].split('-')[1])  >= 97">
                     <button class="btn" [routerLink]="['/path',ids[i]]"><mat-icon>edit</mat-icon></button>
                     <button (click)="deletePath(path,ids[i])" class="btn"><mat-icon>delete</mat-icon></button>
-                    <button class="btn" [routerLink]="['/simulation',ids[i]]"><mat-icon>play_circle_filled</mat-icon></button>
+
                 </td>
             </tr>
 
