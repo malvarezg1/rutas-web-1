@@ -77,9 +77,9 @@
 
                                         <i *ngIf="path.PATH[item.ID].task == '2'" class="fa fa-video" title="start recording video at this waypoint"></i>
 
-                                        <i *ngIf="path.PATH[item.ID].task == '3'" title="Take a 360 picture at this waypoint"><mat-icon>timer</mat-icon></i>
+                                        <i *ngIf="path.PATH[item.ID].task == '3'" title="Take a 360 picture at this waypoint"><mat-icon color="green">timer</mat-icon></i>
 
-                                        <i *ngIf="path.PATH[item.ID].task == '4'" title="Take a 360 picture at this waypoint"><mat-icon>360</mat-icon></i>
+                                        <i *ngIf="path.PATH[item.ID].task == '4'" title="Take a 360 picture at this waypoint"><mat-icon color="yellow">360</mat-icon></i>
 
 
 
@@ -119,11 +119,19 @@
 
     <div class="map">
 
-        <p>Select over the map the waypoints for the drone to travel</p>
-        <button mat-raised-button color="primary" class="w-10" (click)="startSimulation(0)">       
-            Simulate route               
-            <mat-icon>play_circle_filled</mat-icon>
-        </button>
+        <div class="legend">
+            <p>Select over the map the waypoints for the drone to travel</p>
+
+        </div>
+        <div class="simulattion options">
+            <button mat-raised-button color="primary" class="w-10" (click)="startSimulation(0)">       
+                Simulate route               
+                <mat-icon>play_circle_filled</mat-icon>
+            </button>
+            <p *ngIf="this.nowSimulating">tarea actual: {{this.currentSimulationTask.viewValue}}</p>
+        </div>
+
+
         <google-map width="auto" height="800px" [options]="options" (mapClick)="addWaypoint($event)">
 
             <map-marker *ngFor=" let markerPosition of guidePathGoogle; let j = index " [position]="markerPosition " [options]="guideMarkerOptions[j]">
@@ -164,9 +172,9 @@
 
                             <i *ngIf="path.PATH[i].task == '2'" class="fa fa-video text-center fa-2x" title="start recording video at this waypoint"></i>
 
-                            <i *ngIf="path.PATH[i].task == '3'" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon>timer</mat-icon></i>
+                            <i *ngIf="path.PATH[i].task == '3'" title="star picture interval" class="text-center"><mat-icon color="green">timer</mat-icon></i>
 
-                            <i *ngIf="path.PATH[i].task == '4'" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon>360</mat-icon></i>
+                            <i *ngIf="path.PATH[i].task == '4'" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon color="yellow">360</mat-icon></i>
 
                         </div>
 
