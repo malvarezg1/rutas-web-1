@@ -540,7 +540,9 @@ export class PathComponent {
 
       
       let markerColor = "#000000";
-      if(this.currentSimulationTask != this.tasks[2])this.currentSimulationTask = this.tasks[0];
+      if(this.currentSimulationTask != this.tasks[2] && this.currentSimulationTask != this.tasks[3]){
+        this.currentSimulationTask = this.tasks[0];
+      }
 
       let googlePoint = this.guidePathGoogle[index];
       for (let index = 0; index < this.path.PATH.length; index++) {
@@ -675,7 +677,8 @@ export class PathComponent {
   }
 
   getSVGdrone(altura: number):string{
-    return `M 0 -${altura} Q 0 -${altura+1} 1 -${altura+1} Q 0 -${altura+1} 0 -${altura+2} Q 0 -${altura+1} -1 -${altura+1} Q 0 -${altura+1} 0 -${altura}`;
+    return `M -1 -${altura} Q 0 -${altura+1} 1 -${altura} Q 0 -${altura+1} 2 -${altura+1} Q 0 -${altura+1} -2 -${altura+1} Q 0 -${altura+1} -1 -${altura}`
+    //return `M 0 -${altura} Q 0 -${altura+1} 1 -${altura+1} Q 0 -${altura+1} 0 -${altura+2} Q 0 -${altura+1} -1 -${altura+1} Q 0 -${altura+1} 0 -${altura}`;
   }
 
 
