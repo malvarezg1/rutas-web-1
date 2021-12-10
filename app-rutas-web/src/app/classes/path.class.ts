@@ -44,9 +44,7 @@ export class Path {
      * elimina el pathpoint de la posicion i
      * @param i posicion a eliminar
      */
-    removePathPoint(i: number){
-        this.PATH.splice(i,1);
-    }
+    
 
     /** 
      * @returns una representacion de la ruta
@@ -58,5 +56,7 @@ export class Path {
         }
         str += "________________________________________";
         return str;        
-    }        
+    }
+    
+    
 }

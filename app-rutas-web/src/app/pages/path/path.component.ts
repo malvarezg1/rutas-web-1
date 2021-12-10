@@ -321,7 +321,10 @@ export class PathComponent {
   }
 
   deleteWaypoint(id: number){
-    this.path.PATH.splice(id,1);   //revisar metodo redimencionar, hay que ajustar ids del arreglo despues de eliminar un elemento inicial o intermedio
+    this.path.PATH.splice(id,1); //revisar metodo redimencionar, hay que ajustar ids del arreglo despues de eliminar un elemento inicial o intermedio
+    for (let index = 0; index < this.path.PATH.length; index++)
+      this.path.PATH[index].ID = index;
+    
     this.currentPathGoogle = []
     this.guidePathGoogle = []
     this.markerOptions = []
