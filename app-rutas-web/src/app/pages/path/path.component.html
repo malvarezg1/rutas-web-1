@@ -77,7 +77,7 @@
 
                                         <i *ngIf="path.PATH[item.ID].task == '2'" class="fa fa-video" title="start recording video at this waypoint"></i>
 
-                                        <i *ngIf="path.PATH[item.ID].task == '3'" title="Take a 360 picture at this waypoint"><mat-icon color="green">timer</mat-icon></i>
+                                        <i *ngIf="path.PATH[item.ID].task == '3'" title="Take picture at an interval"><mat-icon color="green">timer</mat-icon></i>
 
                                         <i *ngIf="path.PATH[item.ID].task == '4'" title="Take a 360 picture at this waypoint"><mat-icon color="yellow">360</mat-icon></i>
 
@@ -175,6 +175,12 @@
                             <i *ngIf="path.PATH[i].task == '3'" title="star picture interval" class="text-center"><mat-icon color="green">timer</mat-icon></i>
 
                             <i *ngIf="path.PATH[i].task == '4'" title="Take a 360 picture at this waypoint" class="text-center"><mat-icon color="yellow">360</mat-icon></i>
+
+                            <div *ngIf="path.PATH[i].task == '3'" class="tiempo-intervalo">
+                                cada_
+                                <span><input id="{{path.PATH[i].ID + path.PATH[i].task + path.PATH[i]  }}" type="number" matInput class="form-control text-center" [(ngModel)]="path.PATH[i].instruction" name="{{i+'seg'}}" placeholder="" ngDefaultControl ></span>                                _segundos
+                            </div>
+
 
                         </div>
 

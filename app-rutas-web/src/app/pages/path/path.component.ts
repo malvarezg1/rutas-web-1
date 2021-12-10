@@ -537,6 +537,7 @@ export class PathComponent {
    */
   async startSimulation(index: number){
 
+    let interval = 1;
     this.nowSimulating = true
 
     if(index < this.alturasIntermedias.length){//si es un id valido
@@ -556,7 +557,8 @@ export class PathComponent {
           if(this.currentSimulationTask == this.tasks[2] && parseInt(waypointelement.task) == 2){
             this.currentSimulationTask == this.tasks[0]; //stop video recording
           }else{
-            this.currentSimulationTask = this.tasks[parseInt(waypointelement.task)]
+            this.currentSimulationTask = this.tasks[parseInt(waypointelement.task)]           
+            
           }     
           
           
@@ -602,7 +604,10 @@ export class PathComponent {
           delay = 1000;
       }else if(this.currentSimulationTask == this.tasks[3]){
           markerColor = "#1b9410";
-          delay = 1000;         
+          delay = interval*1000;
+          
+          
+             
       }else if(this.currentSimulationTask == this.tasks[4]){
           markerColor = "#bfa900";
           delay = 2000;
