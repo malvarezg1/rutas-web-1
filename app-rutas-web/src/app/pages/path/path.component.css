@@ -1,0 +1,45 @@
+.contenedor {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.map {
+    flex-basis: calc(70%);
+    height: 100%;
+}
+
+.sidebar {
+    flex-basis: calc(30%);
+    height: 100%;
+}
+
+.mitabla {
+    height: 300px;
+    overflow-y: auto;
+    /* Trigger vertical scroll    */
+    overflow-x: hidden;
+}
+
+.configuration-panel {
+    height: 100%;
+    overflow-y: auto;
+    /* Trigger vertical scroll    */
+    overflow-x: hidden;
+}
+
+.point-input {
+    display: inline;
+}
+
+.mat-slider {
+    width: 100%;
+}
+
+.botonorea-waypoint {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
