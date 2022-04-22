@@ -21,14 +21,14 @@ export class RoutesService {
     /**
      * crea/actualza un path de id especificado
      * @param path objeto que representa el plan de ruta
-     * @param id identificador para guardarlo 
+     * @param id identificador para guardarlo
      * @returns response: del resultado de la operacion
      */
     putPath(path: Path, id: string){
 
         let jsonObj:any = {description: "", PATH: {} };
-        
-        //objeto tipo json con nombres de atributos acorde al esquema actual 
+
+        //objeto tipo json con nombres de atributos acorde al esquema actual
         jsonObj.description = path.description + "";
         for(let i = 0; i < path.PATH.length; i++){
             var pointName = 'PATHPOINT-' + i;
@@ -36,22 +36,22 @@ export class RoutesService {
             jsonObj.PATH[pointName]=point;
         }
 
-        //el id debe venir de la forma 'PATH-#' 
+        //el id debe venir de la forma 'PATH-#'
         //es put pues nosotros queremos definir el id (autcalculado) y no el que asigna firebase a un nuevo registro (POST)
         return this.http.put(`${this.url}/${id}.json`, jsonObj)
         .pipe(
-            map( (resp:any) => {                
+            map( (resp:any) => {
                 return id;
             })
         );
 
-    }    
+    }
 
 
     /**
-     * Elimina en la base de datos una ruta de id especificado 
+     * Elimina en la base de datos una ruta de id especificado
      * @param id identificador del id a eliminar
-     * @returns 
+     * @returns
      */
     deletePath(id: string){
         return this.http.delete(`${this.url}/${id}.json`);
@@ -69,14 +69,12 @@ export class RoutesService {
                    .pipe(
                        map(this.buildPath)
                    )
-        
-              
     }
 
     /**
-     * desde un objeto Json construye un objeto Path para que cumpla con su estructura 
-     * @param pathObj 
-     * @returns 
+     * desde un objeto Json construye un objeto Path para que cumpla con su estructura
+     * @param pathObj
+     * @returns
      */
     private buildPath(pathObj: any){
         let path: Path = pathObj;
@@ -89,7 +87,7 @@ export class RoutesService {
         Object.keys(pointsObj).forEach(pointKey =>{
             //asignacion directa pues los nombres de campos coinciden
             let point:PathPoint = pointsObj[pointKey];
-            waypoints_i.push(point);              
+            waypoints_i.push(point);
         });
 
         //re asigna el arreglo de pathpoints
@@ -110,10 +108,10 @@ export class RoutesService {
         let paths: Path[] = [];
         return this.http.get(`${this.url}/.json`)
                     .pipe(
-                        map(this.buildArray),                        
+                        map(this.buildArray),
                         delay(800)// solo con el fin de ver que carga
                     );
-        
+
     }
 
     /**
@@ -122,10 +120,10 @@ export class RoutesService {
      * @returns un arreglo con ids y objetos Path
      */
     private buildArray(pathsObj: any){
-        
+
         //en la posicion 0 de este arreglo hay un arreglo de keys o ids the rutas
         //en la posicion 1 de este arreglo hay un arreglo de objetos tipo ruta
-        let resp: Object[] = []; 
+        let resp: Object[] = [];
 
 
         //arreglo para guardar todos los paths: Path
@@ -134,7 +132,7 @@ export class RoutesService {
         //arreglo para guardar el correspondiente ID del path (porque no es un campo en la clase)
         let ids: string[] = [];
 
-        
+
 
         //si no hay ningun registro retora una arreglo vacio
         if(pathsObj === null) return [];
@@ -155,22 +153,22 @@ export class RoutesService {
             Object.keys(pointsObj).forEach(pointKey =>{
                 //asignacion directa pues los nombres de campos coinciden
                 let point:PathPoint = pointsObj[pointKey];
-                waypoints_i.push(point);              
+                waypoints_i.push(point);
             });
 
             //re asigna el arreglo de pathpoints
             path_i.PATH = waypoints_i;
-           
+
 
             //agregar el path al arreglo de paths
             paths.push(path_i);
 
             //agregar el id al arreglo de ids
             ids.push(key);
-                       
 
 
-            
+
+
         });
         //agregar ids y paths al arreglo respuesta
         resp.push(ids);//resp[0]
@@ -182,7 +180,7 @@ export class RoutesService {
 
 
     /**
-     * Regresa el siguiente id libre para usar 
+     * Regresa el siguiente id libre para usar
      * @returns number. con un id que no exista previamente
      */
      getNextId(){
@@ -201,22 +199,22 @@ export class RoutesService {
      * @returns un id libre que se puede usar para crear una nuevo path sin conflictos
      */
     private getMaxIdFromArray(pathsObj: any){
-        
-        let resp: number = -1;       
+
+        let resp: number = -1;
 
         //si no hay ningun registro retora una arreglo vacio
         if(pathsObj === null) return -1;
 
         Object.keys(pathsObj).forEach(key => {
-            
+
             //key:string es de la forma 'PATH-#'
             //Debemos extraer el #
             key = key.split('-')[1];
             let current_id = parseInt(key);
 
-            if(current_id > resp) resp = current_id            
+            if(current_id > resp) resp = current_id
         });
-        
+
         return resp + 1;
     }
 
@@ -225,5 +223,7 @@ export class RoutesService {
     getCityPath(id:string){
         //TODO
     }
-    
+
 }
+
+

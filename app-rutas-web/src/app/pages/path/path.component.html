@@ -123,15 +123,16 @@
             <p>Select over the map the waypoints for the drone to travel</p>
 
         </div>
+        <!--Boton de simulacion -->
         <div class="simulattion options">
-            <button mat-raised-button color="primary" class="w-10" (click)="startSimulation(0)">       
-                Simulate route               
+            <button mat-raised-button color="primary" class="w-10" (click)="startSimulation(0)">
+                Simulate route
                 <mat-icon>play_circle_filled</mat-icon>
             </button>
             <p *ngIf="this.nowSimulating">tarea actual: {{this.currentSimulationTask.viewValue}}</p>
         </div>
 
-
+        <!-- Google Maps -->
         <google-map width="auto" height="800px" [options]="options" (mapClick)="addWaypoint($event)">
 
             <map-marker *ngFor=" let markerPosition of guidePathGoogle; let j = index " [position]="markerPosition " [options]="guideMarkerOptions[j]">
@@ -155,7 +156,7 @@
 
 
                         <p class="text-center"> Camera Task: </p>
-
+                          <!-- Boton Waypoint -->
                         <div class="botonorea-waypoint">
 
                             <mat-form-field>
@@ -198,7 +199,7 @@
                                 save waypoint options
                             </button>
                             <button mat-raised-button color="red" class="w-20" (click)="this.deleteWaypoint(path.PATH[i].ID)">
-                                <i class="fa fa-trash" ></i>                                
+                                <i class="fa fa-trash" ></i>
                             </button>
 
                         </div>

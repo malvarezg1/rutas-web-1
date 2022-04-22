@@ -11,8 +11,6 @@ import Swal from 'sweetalert2';
 })
 export class PathsComponent implements OnInit {
 
- 
-
 
   // Lista de rutas recuperadas de la base de datos para esta pagina
   paths: Path[] = [];
@@ -26,7 +24,7 @@ export class PathsComponent implements OnInit {
 
   constructor(private dataService: RoutesService) { }
 
- 
+
   ngOnInit(): void {
 
 
@@ -44,10 +42,10 @@ export class PathsComponent implements OnInit {
   }
 
   deletePath(path: Path, id: string){
-  
-    
+
+
     if(parseInt(id.split('-')[1]) >=98){ //no quiero borrar registros antiguos creados con VR app
-        
+
       Swal.fire({ // dialogo de confirmacion para eliminar un path
         title: 'DELETE CONFIRMATION?',
         text: `are you sure you want to remove the ${id} from the database`,
@@ -59,16 +57,16 @@ export class PathsComponent implements OnInit {
 
           //borra de la base de datos
           this.dataService.deletePath(id).subscribe();
-        
+
           //borra de la lista local
-          let index = this.ids.indexOf(id);          
+          let index = this.ids.indexOf(id);
           this.paths.splice(index,1);
           this.ids.splice(index,1);
         }
       });
 
 
-      
+
     }
 
 

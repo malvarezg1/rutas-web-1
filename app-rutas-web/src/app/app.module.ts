@@ -10,10 +10,10 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-//Componentes 
+//Componentes
 import { PathComponent } from './pages/path/path.component';
 import { PathsComponent } from './pages/paths/paths.component';
-
+import { GalleryComponent } from './pages/gallery/gallery.component';
 
 
 
@@ -22,29 +22,28 @@ import { MaterialModule } from './material.module';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     PathComponent,
-    PathsComponent
-    
-    
+    PathsComponent,
+    GalleryComponent
   ],
   imports: [
-    BrowserModule,    
+    BrowserModule,
     GoogleMapsModule,
     BrowserAnimationsModule,
     MaterialModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule
-    
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 
-  
+
 
 }
