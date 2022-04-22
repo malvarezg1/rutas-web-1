@@ -16,9 +16,10 @@ export class GalleryComponent implements OnInit {
     private sanitizer:DomSanitizer) { }
 
   public image!: SafeUrl;
+  public images!: Array<SafeUrl>;
 
   ngOnInit(): void {
-    this.multiService.getImage().then(resp =>{
+    this.multiService.getImage("DJI4-21-2022, 10:00:03 PM").then(resp =>{
       console.log(resp)
       let  string64b = this.arrayBufferToBase64(resp)
       console.log(string64b)
@@ -26,7 +27,28 @@ export class GalleryComponent implements OnInit {
       console.log(url)
       this.image = url
     })
+
+    /*
+    this.multiService.listImages().then(res=>{
+      res.items.forEach(element => {
+        console.log(element.name)
+        this.displayImage(element.name)
+      });
+    })
+    */
   }
+
+    displayImage(name: String){
+      this.multiService.getImage(name).then(resp =>{
+        console.log(resp)
+        let  string64b = this.arrayBufferToBase64(resp)
+        console.log(string64b)
+        let  url  = this.sanitize("data:image/jpg;base64, " +string64b)
+        console.log(url)
+        this.image = url
+        this.images.push(url)
+      })
+    }
 
     arrayBufferToBase64( buffer: ArrayBuffer ) {
       var binary = '';

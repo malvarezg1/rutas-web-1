@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { getBytes, getStorage, ref } from 'firebase/storage';
+import { getBytes, getStorage, listAll, ref } from 'firebase/storage';
 
 /**
  * Servicio para solicitar informacion desde la base de datos de rutas
@@ -21,11 +21,16 @@ export class MultimediaService {
 
   // Get a reference to the storage service, which is used to create references in your storage bucket
   private storage = getStorage(this.firebaseApp);
+  private imagesRefernece = ref(this.storage, 'images');
 
-  getImage(){
-    let multiReference = ref(this.storage, 'images/DJI4-21-2022, 10:00:06 PM');
+  getImage(name: String){
+    let multiReference = ref(this.storage, 'images/' + name);
     let bytes = getBytes(multiReference)
     return bytes
+  }
+
+  listImages(){
+     return listAll(this.imagesRefernece)
   }
 
 }
