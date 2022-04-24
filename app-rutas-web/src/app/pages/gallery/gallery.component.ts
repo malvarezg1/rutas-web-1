@@ -6,7 +6,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 @Component({
   selector: 'app-paths',
   templateUrl: './gallery.component.html',
-  styleUrls: []
+  styleUrls: [ './gallery.component.css']
 
 })
 export class GalleryComponent implements OnInit {
@@ -16,26 +16,17 @@ export class GalleryComponent implements OnInit {
     private sanitizer:DomSanitizer) { }
 
   public image!: SafeUrl;
-  public images!: Array<SafeUrl>;
+  public images = new Array<SafeUrl>();
 
   ngOnInit(): void {
-    this.multiService.getImage("DJI4-21-2022, 10:00:03 PM").then(resp =>{
-      console.log(resp)
-      let  string64b = this.arrayBufferToBase64(resp)
-      console.log(string64b)
-      let  url  = this.sanitize("data:image/jpg;base64, " +string64b)
-      console.log(url)
-      this.image = url
-    })
 
-    /*
     this.multiService.listImages().then(res=>{
+      console.log(res)
       res.items.forEach(element => {
         console.log(element.name)
         this.displayImage(element.name)
       });
     })
-    */
   }
 
     displayImage(name: String){
@@ -45,8 +36,8 @@ export class GalleryComponent implements OnInit {
         console.log(string64b)
         let  url  = this.sanitize("data:image/jpg;base64, " +string64b)
         console.log(url)
-        this.image = url
         this.images.push(url)
+        console.log(this.images)
       })
     }
 

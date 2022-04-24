@@ -3,13 +3,15 @@
     <h1>Gallery</h1>
     <div class="col-lg-6">
       <h2>Espacio para mapa</h2>
-      <br>
-      <img src="https://www.google.com/maps/d/thumbnail?mid=1a78H4Iw-fL85NcYjT55Oi0iAPLg&hl=es">
+      <br />
+      <img
+        src="https://www.google.com/maps/d/thumbnail?mid=1a78H4Iw-fL85NcYjT55Oi0iAPLg&hl=es"
+      />
     </div>
-    <div class="col-lg-6">
-      <h2>DJI4-21-2022</h2>
-      <p>21 abr 2022 17:02:08</p>
-      <img [src]="image" height="350" width="600">
+    <div class="col-lg-6" id="image_collection">
+      <div class="container vertical-scrollable">
+        <img class="drone-image" [src]="img" *ngFor="let img of images"/>
+      </div>
     </div>
   </div>
 </div>

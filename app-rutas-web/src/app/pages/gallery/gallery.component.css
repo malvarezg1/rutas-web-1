@@ -1,0 +1,10 @@
+.vertical-scrollable{
+  height: 70vh;
+  overflow-y: scroll;
+}
+
+.drone-image{
+  height:150px;
+  width:250px;
+  margin: 5px 10px 5px 0px;
+}
