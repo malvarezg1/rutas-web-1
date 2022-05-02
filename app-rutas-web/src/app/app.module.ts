@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PathComponent } from './pages/path/path.component';
 import { PathsComponent } from './pages/paths/paths.component';
 import { GalleryComponent } from './pages/gallery/gallery.component';
+import { AnalysisComponent } from './pages/analysis/analysis.component';
 
 
 
@@ -28,7 +29,7 @@ import { MaterialModule } from './material.module';
     AppComponent,
     PathComponent,
     PathsComponent,
-    GalleryComponent
+    GalleryComponent,
   ],
   imports: [
     BrowserModule,
