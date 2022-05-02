@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "drone-control-app",
+  "private_key_id": "bf8b97f264bc1678a2c8739653d3b81133035adb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDK5KZOQrTzF7HC\nIF1hntV+vVFWJDh9wIOIzbkCOPXsz/G9UH+NjZuNTDdpWT/m2hVg1RkEDktvlAhq\nju5zbN/mXI6OdxUGLe+gUT1EPCKzGGk69JBe0bhObfZwibkAT1+mx7IzXY8eJfv5\nWgU5YldKiOWSi5COyVrUD5468Irl8T865DtNgPf1u7qz/O/H4mTY5beZKihTRyfE\nw4va6ZVX2BUPxulRxB7LQBC8MDGHGabCD/bMCqQiZxYaoPons7okDWFBi8wKw7Hc\nrUJxPhm8Ufd2BS11W3AGwaEWJHKJ0dhCsCeuvWCBf4wT4CQeaiWm5t7y9u7hs1Kh\nbpKH7XgPAgMBAAECggEACtnZrxvQM6QTxK8Yb20gO+wCGppLTyZponpmJ6FGPckN\nQ7O3bqmhJRhraj30tfL567jZ4qalEC2ZmaFVTWUIQHi4wxPJUxBH3Yoavbh9nphy\noE2OHxQWSFOHN5OWClc0ZWYOuMKLMfCUHkzbNKt2way6onDGZWyNaAQB0WMl+pAo\n74/hjzginiAWb9RS7aUyHFzsZkCTfZZ1ZMnCXyTazyndQh9+D5hDPCGiN+5K/MEp\ng/IcftcDVk6gMCZu/07cLfewpz5pilavGw7LyQ/byZjcdZ2y9vvwqhCOrZDXnezu\n7xAMCUrgjobuZ7ikfG8rJRvEZYf2mHs+FE6OW9hxQQKBgQD9FpzMbEa0BgWPpZE1\ncFoVtJCUhC/wg1fOSRRDCic0QsBuIe07923fQ1BkznK8e5PM7FTKNSUrTYEqyCQe\n8OMH4ZyS3D31OdUd5paUF7zpQJZxTtCpBXR0osADS99E58VuXL8oSsuBdIM4dZrH\n17VCN8lAQ3ddhbmgoh6CHUPobwKBgQDNOjQ3Ei+KZkZOHvHq13ykC385fe+ACQ4G\n7n114yYB1r3IrH/A2Qj8YTxDcT69ybRIoF4EkWGf4kRSZVv6a6HqgwQnEb5C27mq\nZyjOWdKjaaUGJ6G9k41Q/c8qYVlS05n4+x+8K5C9tzPp9PbUMyhR68yCnfFaQXlm\nEfbV4ir6YQKBgAS2Gw0jJt3LDudxqZZZFRQ6XEanf0z25PeOHLZyxfAPHg3uy7/G\nB2GUmzaFMVWY51N1Qs7Q1nRL6Q+m0iVRTqii5otFVlHuVa1M0ZjIKFgfP620TeYX\nl+dj8DcffnSF7AL17wkM+2TZimfOqKb3uQQWjcSIfPxctOvsmKzLZqw5AoGAL+73\nQSGbPv0SUK7DnDFGaF5TEc+LP+FdiFrtrLooJ2fLnfJESHuosKHZXHs3x0Y0OH5U\nV0bJgXlssb4A1KWNBOQi9Skcwirl25oKmt+55fcH1z8sdMXgzNjrKR/hqAnKPbAR\nwnZ+cQE4O92+ROPJ+BBWDO/s7kK6ow9xEpWnqiECgYEA+CPSPzRrisecIfgUU3io\na/4ymMh/NMLCPUCIG4PYiuqGvAisW15g8rLX7hws6Vjv1QZBTLGHI//xr4YYShgD\nBjK8NJjR76O5Lwcd21RQ9FHaAgykD5PzkpiykUKp4hzDqIY6ILu99ecx+Yus6Ox1\nbG50ZAFfMRt3yrPcsoADCaA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-bc32q@drone-control-app.iam.gserviceaccount.com",
+  "client_id": "103310579263430191397",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-bc32q%40drone-control-app.iam.gserviceaccount.com"
+}
