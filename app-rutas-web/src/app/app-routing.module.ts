@@ -8,7 +8,7 @@ import { AnalysisComponent } from './pages/analysis/analysis.component';
 
 const routes: Routes =[
   {path: 'gallery', component:GalleryComponent },
-  { path: 'analysis', component: AnalysisComponent},
+  { path: 'analysis/:id', component: AnalysisComponent},
   { path: 'paths', component: PathsComponent},
   { path: 'path/:id', component: PathComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'paths'}

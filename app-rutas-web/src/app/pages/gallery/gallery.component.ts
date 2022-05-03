@@ -101,6 +101,7 @@ export class GalleryComponent implements OnInit {
   }
 
   btnClick =  (id: String) => {
+      console.log(id)
       this.router.navigateByUrl('/analysis/'+id)  ;
   };
 }
