@@ -13,31 +13,6 @@ import { storage } from 'firebase-admin';
   providedIn: 'root',
 })
 export class MultimediaService {
-  /*private firebaseConfig = {
-    projectId: 'drone-control-app',
-    apiKey: 'AIzaSyDx7hHcjZVI5mWBaE6nI4cHH33zb70ARQY',
-    authDomain: 'drone-control-app.firebaseapp.com',
-    databaseURL: 'https://drone-control-app.firebaseio.com/',
-    storageBucket: 'drone-control-app.appspot.com',
-  };
-
-  private firebaseApp = initializeApp(this.firebaseConfig);
-
-  // Get a reference to the storage service, which is used to create references in your storage bucket
-  private storage = getStorage(this.firebaseApp);
-  private imagesRefernece = ref(this.storage, 'prueba');
-
-  getImage(name: String){
-    let multiReference = ref(this.storage, 'prueba/' + name);
-    let bytes = getBytes(multiReference)
-    return bytes
-  }
-
-  listImages(){
-     return listAll(this.imagesRefernece)
-  }
-  */
-
   constructor(private storage: AngularFireStorage) {}
 
   private imagesRefernece = this.storage.ref('prueba');
@@ -46,8 +21,7 @@ export class MultimediaService {
     return this.imagesRefernece.listAll();
   }
 
-
   getImage(name: String) {
-    return this.storage.ref('prueba/' + name).getDownloadURL()
+    return this.storage.ref('prueba/' + name).getDownloadURL();
   }
 }

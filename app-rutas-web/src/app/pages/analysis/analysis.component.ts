@@ -6,45 +6,37 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AnalysisList } from 'src/app/classes/analysisList.class';
 
-
 @Component({
   selector: 'app-paths',
   templateUrl: './analysis.component.html',
-  styleUrls: [ './analysis.component.css']
-
+  styleUrls: ['./analysis.component.css'],
 })
 export class AnalysisComponent implements OnInit {
-
   private idUrl!: string;
   public imageUrl!: SafeUrl;
-  private analysis! : AnalysisList
+  private analysis!: AnalysisList;
 
   constructor(
     private url: ActivatedRoute,
     private multiService: MultimediaService,
     private sanitizer: DomSanitizer,
-    private firestore: FirestoreService,
-    ) {
-     this.idUrl = this.url.snapshot.paramMap.get('id') + "";
-    }
+    private firestore: FirestoreService
+  ) {
+    this.idUrl = this.url.snapshot.paramMap.get('id') + '';
+  }
 
-
-
-    displayImage(name: String){
-      this.multiService.getImage(name).subscribe((res) => {
-        this.imageUrl = res
-      });
-    }
-
-
-  ngOnInit(): void {
-   this.displayImage(this.idUrl)
-   let id = this.idUrl.replace(".jpg", "")
-   this.firestore.getAnalysis(id).subscribe(res => {
-     this.analysis = res.data()!
-     console.log(this.analysis.persons)
+  displayImage(name: String) {
+    this.multiService.getImage(name).subscribe((res) => {
+      this.imageUrl = res;
     });
   }
 
+  ngOnInit(): void {
+    this.displayImage(this.idUrl);
+    let id = this.idUrl.replace('.jpg', '');
+    this.firestore.getAnalysis(id).subscribe((res) => {
+      this.analysis = res.data()!;
+      console.log(this.analysis.persons);
+    });
+  }
 }
-

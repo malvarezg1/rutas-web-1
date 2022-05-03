@@ -32,7 +32,6 @@ export class GalleryComponent implements OnInit {
   public images = new Array<Image>();
   public markers = new Array<Marker>();
 
-
   ngOnInit(): void {
     this.fetchData();
   }
@@ -50,18 +49,20 @@ export class GalleryComponent implements OnInit {
       let img = new Image(res, name);
       this.images.push(img);
 
-      fetch(img.url).then((res) => res.arrayBuffer()).then((res) => {
-        //Save Latitrudes and Logitudes
-        const Data = ExifParserFactory.create(res).parse();
+      fetch(img.url)
+        .then((res) => res.arrayBuffer())
+        .then((res) => {
+          //Save Latitrudes and Logitudes
+          const Data = ExifParserFactory.create(res).parse();
 
-        //Lat
-        let lat = Data.tags!.GPSLatitude as number;
+          //Lat
+          let lat = Data.tags!.GPSLatitude as number;
 
-        //Long
-        let long = Data.tags!.GPSLongitude as number;
-        let marker = new Marker(lat, long);
-        this.markers.push(marker);
-      });
+          //Long
+          let long = Data.tags!.GPSLongitude as number;
+          let marker = new Marker(lat, long);
+          this.markers.push(marker);
+        });
     });
   }
 
