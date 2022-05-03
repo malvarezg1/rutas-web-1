@@ -25,7 +25,7 @@ import { MaterialModule } from './material.module';
 import { environment } from "src/environments/environment";
 import { AngularFireModule } from "@angular/fire/compat/";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-//import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 
 @NgModule({
@@ -34,6 +34,7 @@ import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
     PathComponent,
     PathsComponent,
     GalleryComponent,
+    AnalysisComponent
   ],
   imports: [
     BrowserModule,
@@ -44,8 +45,8 @@ import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
     FormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule
-    
+    AngularFirestoreModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

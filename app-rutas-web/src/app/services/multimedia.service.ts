@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { getBytes, getStorage, listAll, ref } from 'firebase/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { storage } from 'firebase-admin';
 
 /**
  * Servicio para solicitar informacion desde la base de datos de rutas
@@ -11,7 +13,7 @@ import { getBytes, getStorage, listAll, ref } from 'firebase/storage';
   providedIn: 'root',
 })
 export class MultimediaService {
-  private firebaseConfig = {
+  /*private firebaseConfig = {
     projectId: 'drone-control-app',
     apiKey: 'AIzaSyDx7hHcjZVI5mWBaE6nI4cHH33zb70ARQY',
     authDomain: 'drone-control-app.firebaseapp.com',
@@ -34,6 +36,18 @@ export class MultimediaService {
   listImages(){
      return listAll(this.imagesRefernece)
   }
+  */
 
+  constructor(private storage: AngularFireStorage) {}
+
+  private imagesRefernece = this.storage.ref('prueba');
+
+  listImages() {
+    return this.imagesRefernece.listAll();
+  }
+
+
+  getImage(name: String) {
+    return this.storage.ref('prueba/' + name).getDownloadURL()
+  }
 }
-

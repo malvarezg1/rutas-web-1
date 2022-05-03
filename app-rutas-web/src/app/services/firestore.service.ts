@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AnalysisList } from '../classes/analysisList.class';
 
 
 /**
@@ -12,8 +13,8 @@ export class FirestoreService{
   constructor(   private firestore: AngularFirestore   ) {}
 
 
-  getShapes(){
-    return this.firestore.collection("Analyzed_Media").snapshotChanges();
+  getAnalysis(id: string){
+    return this.firestore.doc<AnalysisList>('Analyzed_Media/DJI4-21-2022, 10:00:03 PM').get();
   }
 }
 

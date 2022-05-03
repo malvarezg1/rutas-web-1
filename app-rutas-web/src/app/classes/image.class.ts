@@ -1,9 +1,9 @@
 import { SafeResourceUrl } from '@angular/platform-browser';
 
 
-export class Image {    
+export class Image {
     constructor(
-      public url: SafeResourceUrl,
-      public name: String
+      public url: string,
+      public name: string
     ) { }
   }
