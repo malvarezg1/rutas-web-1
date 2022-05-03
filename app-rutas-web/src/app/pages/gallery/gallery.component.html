@@ -11,8 +11,11 @@
         </div>
         <div class="col-lg-6" id="image_collection">
             <div class="container vertical-scrollable">
-                <img class="drone-image" [src]="img" *ngFor="let img of images" id="the-img" (click)="ejemplo()" />
+              <div *ngFor="let img of images">
+                <img class="drone-image" src= {{img.url}}  id={{img.name}}  />
+              </div>
             </div>
         </div>
     </div>
 </div>
+n

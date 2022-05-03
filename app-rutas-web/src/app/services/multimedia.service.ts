@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { getBytes, getStorage, listAll, ref } from 'firebase/storage';
 
@@ -11,6 +12,7 @@ import { getBytes, getStorage, listAll, ref } from 'firebase/storage';
 })
 export class MultimediaService {
   private firebaseConfig = {
+    projectId: 'drone-control-app',
     apiKey: 'AIzaSyDx7hHcjZVI5mWBaE6nI4cHH33zb70ARQY',
     authDomain: 'drone-control-app.firebaseapp.com',
     databaseURL: 'https://drone-control-app.firebaseio.com/',
@@ -32,5 +34,7 @@ export class MultimediaService {
   listImages(){
      return listAll(this.imagesRefernece)
   }
+
+
 
 }

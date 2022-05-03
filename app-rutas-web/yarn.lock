@@ -3882,6 +3882,11 @@
     "signal-exit" "^3.0.0"
     "strip-eof" "^1.0.0"
 
+"exif-js@^2.3.0":
+  "integrity" "sha1-nRCBm/Vx+HOBPnZAJBJVq5zhqBQ="
+  "resolved" "https://registry.npmjs.org/exif-js/-/exif-js-2.3.0.tgz"
+  "version" "2.3.0"
+
 "expand-brackets@^2.1.4":
   "integrity" "sha1-t3c14xXOMPa27/D4OwQVGiJEliI="
   "resolved" "https://registry.npmjs.org/expand-brackets/-/expand-brackets-2.1.4.tgz"

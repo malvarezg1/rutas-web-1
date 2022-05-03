@@ -5,6 +5,15 @@ import * as EXIF from 'exif-js';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
+
+
+class Image {
+  constructor(
+    public url: SafeUrl,
+    public name : String
+  ){}
+}
+
 @Component({
   selector: 'app-paths',
   templateUrl: './gallery.component.html',
@@ -20,11 +29,11 @@ export class GalleryComponent implements OnInit {
     private router: Router,
     private multiService: MultimediaService,
     private sanitizer: DomSanitizer) { }
-  
+
   public script = false;
   public image!: SafeUrl;
-  public images = new Array<SafeUrl>();
-  
+  public images = new Array<Image>();
+
 
   async fetchData(): Promise<void>{
     this.multiService.listImages().then(res => {
@@ -46,8 +55,9 @@ export class GalleryComponent implements OnInit {
   displayImage(name: String){
       this.multiService.getImage(name).then(resp =>{
         let  string64b = this.arrayBufferToBase64(resp)
-        let  url  = this.sanitize("data:image/jpg;base64, " +string64b)
-        this.images.push(url)
+        let  img = new Image(this.sanitize("data:image/jpg;base64, " +string64b), name)
+        console.log(img)
+        this.images.push(img)
       })
     }
 
@@ -60,11 +70,11 @@ export class GalleryComponent implements OnInit {
       script.text = `
       {
           document.getElementById("the-img").onclick = function() {
-          
+
             EXIF.getData(this, function() {
-      
+
                 myData = this;
-      
+
                 console.log(myData.exifdata);
             });
         }
@@ -90,9 +100,8 @@ export class GalleryComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
-    btnClick =  () => {
-      this.router.navigateByUrl('/analysis');
-};
-
+  btnClick =  (id: String) => {
+      this.router.navigateByUrl('/analysis/'+id)  ;
+  };
 }
 
