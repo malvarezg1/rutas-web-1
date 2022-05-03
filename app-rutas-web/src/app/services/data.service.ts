@@ -167,8 +167,6 @@ export class RoutesService {
             ids.push(key);
 
 
-
-
         });
         //agregar ids y paths al arreglo respuesta
         resp.push(ids);//resp[0]
