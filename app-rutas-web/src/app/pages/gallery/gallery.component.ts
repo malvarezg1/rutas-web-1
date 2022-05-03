@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { MultimediaService } from '../../services/multimedia.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import * as EXIF from 'exif-js';
+const EXIF = require('exif-js');
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -58,6 +58,12 @@ export class GalleryComponent implements OnInit {
         let url = this.sanitize("data:image/jpg;base64," +string64b)
         let  img = new Image(url, name)
         this.images.push(img)
+        console.log("ACA");
+
+        EXIF.getData(img, () => {
+          const make = EXIF.getTag(this, 'Make');
+          console.log(make);
+        });
       })
     }
 
