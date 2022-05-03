@@ -56,7 +56,6 @@ export class GalleryComponent implements OnInit {
       this.multiService.getImage(name).then(resp =>{
         let  string64b = this.arrayBufferToBase64(resp)
         let url = this.sanitize("data:image/jpg;base64," +string64b)
-        console.log("sanitized")
         let  img = new Image(url, name)
         this.images.push(img)
       })
