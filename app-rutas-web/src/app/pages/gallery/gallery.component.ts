@@ -23,7 +23,7 @@ export class GalleryComponent implements OnInit {
     private _renderer2: Renderer2,
 
     private router: Router,
-    private multiService: MultimediaService,
+    //private multiService: MultimediaService,
     private sanitizer: DomSanitizer) { }
 
   public script = false;
@@ -31,7 +31,7 @@ export class GalleryComponent implements OnInit {
   public images = new Array<Image>();
   public markers = new Array<Marker>();
 
-
+  /*
   async fetchData(): Promise<void> {
     this.multiService.listImages().then(res => {
       res.items.forEach(element => {
@@ -39,16 +39,16 @@ export class GalleryComponent implements OnInit {
       });
     });
   }
-
+  */
 
   ngOnInit(): void {
-    let promesa = this.fetchData();
+    /*let promesa = this.fetchData();
 
     promesa.then(res => {
       console.log("TERMINO TODO!")
-    })
+    })*/
   }
-
+  /*
   displayImage(name: String) {
     this.multiService.getImage(name).then(resp => {
 
@@ -70,7 +70,8 @@ export class GalleryComponent implements OnInit {
       this.images.push(img)
     })
   }
-
+ 
+  
   arrayBufferToBase64(buffer: ArrayBuffer) {
     var binary = '';
     var bytes = new Uint8Array(buffer);
@@ -84,9 +85,11 @@ export class GalleryComponent implements OnInit {
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
-
+  
+*/
   btnClick =  (id: String) => {
       this.router.navigateByUrl('/analysis/'+id)  ;
   };
+   
 }
 

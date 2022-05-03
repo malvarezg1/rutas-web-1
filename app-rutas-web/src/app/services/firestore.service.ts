@@ -1,7 +1,5 @@
-import { initializeApp, applicationDefault, cert } from 'firebase-admin/app';
-import { getFirestore, Timestamp, FieldValue } from 'firebase-admin/firestore';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
 /**
@@ -11,7 +9,14 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class FirestoreService{
+  constructor(   private firestore: AngularFirestore   ) {}
 
+
+  getShapes(){
+    return this.firestore.collection("Analyzed_Media").snapshotChanges();
+  }
 }
+
+
 
 

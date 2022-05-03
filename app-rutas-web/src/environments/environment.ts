@@ -4,6 +4,14 @@
 
 export const environment = {
   production: false,
+  firebaseConfig: {
+    apiKey: 'AIzaSyDx7hHcjZVI5mWBaE6nI4cHH33zb70ARQY',
+    authDomain: "xxxx.firebaseapp.com",
+    databaseURL: 'https://drone-control-app.firebaseio.com/',
+    projectId: 'drone-control-app',
+    storageBucket: 'drone-control-app.appspot.com',
+
+  }
   
 };
 

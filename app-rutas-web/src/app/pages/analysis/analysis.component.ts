@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MultimediaService } from 'src/app/services/multimedia.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
-
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 
 @Component({
@@ -20,15 +20,15 @@ export class AnalysisComponent implements OnInit {
 
   constructor(
     private url: ActivatedRoute,
-    private multiService: MultimediaService,
+    //private multiService: MultimediaService,
     private sanitizer: DomSanitizer,
-
+    private firestore: FirestoreService,
     ) {
      this.idUrl = this.url.snapshot.paramMap.get('id') + "";
 
     }
 
-
+    /*
     displayImage(name: String){
       this.multiService.getImage(name).then(resp =>{
         let  string64b = this.arrayBufferToBase64(resp)
@@ -37,7 +37,7 @@ export class AnalysisComponent implements OnInit {
         this.imageUrl = url
       });
     }
-
+    
 
   arrayBufferToBase64(buffer: ArrayBuffer) {
     var binary = '';
@@ -52,11 +52,13 @@ export class AnalysisComponent implements OnInit {
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
-
+*/
 
 
   ngOnInit(): void {
-   this.displayImage(this.idUrl)
+   //this.displayImage(this.idUrl)
+   
+   console.log(this.firestore.getShapes().subscribe(res =>(console.log(res[0].payload.doc.data()))));
   }
 
 }

@@ -21,7 +21,11 @@ import { AnalysisComponent } from './pages/analysis/analysis.component';
 //Modulos propios
 import { MaterialModule } from './material.module';
 
-
+//Firebase
+import { environment } from "src/environments/environment";
+import { AngularFireModule } from "@angular/fire/compat/";
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+//import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 
 @NgModule({
@@ -38,7 +42,10 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
