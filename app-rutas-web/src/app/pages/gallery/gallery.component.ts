@@ -85,8 +85,8 @@ export class GalleryComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
-  btnClick = (id: String) => {
-    this.router.navigateByUrl('/analysis/' + id);
+  btnClick =  (id: String) => {
+      this.router.navigateByUrl('/analysis/'+id)  ;
   };
 }
 
