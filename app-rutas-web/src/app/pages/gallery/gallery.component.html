@@ -2,8 +2,13 @@
     <div class="row">
         <h1>Gallery</h1>
         <div class="col-lg-6">
-            <google-map width="auto" height="100vh">
-
+            <h2>Espacio para mapa</h2>
+            <br />
+            <google-map width="auto" height="800px">
+              <div class="col-lg-6"  *ngFor="let marker of markers">
+                <map-marker [position]="{ lat: marker.lat, lng: marker.long}">
+                </map-marker>              
+              </div>
             </google-map>
         </div>
         <div class="col-lg-6" id="image_collection">
@@ -17,4 +22,3 @@
         </div>
     </div>
 </div>
-n
