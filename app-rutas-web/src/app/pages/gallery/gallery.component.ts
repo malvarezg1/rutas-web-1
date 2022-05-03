@@ -3,6 +3,7 @@ import { MultimediaService } from '../../services/multimedia.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import * as EXIF from 'exif-js';
 import { DOCUMENT } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-paths',
@@ -16,6 +17,7 @@ export class GalleryComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document,
     private _renderer2: Renderer2,
 
+    private router: Router,
     private multiService: MultimediaService,
     private sanitizer: DomSanitizer) { }
   
@@ -41,6 +43,13 @@ export class GalleryComponent implements OnInit {
     })
   }
 
+  displayImage(name: String){
+      this.multiService.getImage(name).then(resp =>{
+        let  string64b = this.arrayBufferToBase64(resp)
+        let  url  = this.sanitize("data:image/jpg;base64, " +string64b)
+        this.images.push(url)
+      })
+    }
 
   ejemplo(): void{
     console.log("ENTROO !!!!!")
@@ -66,16 +75,6 @@ export class GalleryComponent implements OnInit {
   }
 
 
-  displayImage(name: String) {
-    this.multiService.getImage(name).then(resp => {
-
-      let string64b = this.arrayBufferToBase64(resp)
-      let url = this.sanitize("data:image/jpg;base64, " + string64b)
-      this.images.push(url)
-    });
-        
-
-  }
 
   arrayBufferToBase64(buffer: ArrayBuffer) {
     var binary = '';
@@ -90,6 +89,10 @@ export class GalleryComponent implements OnInit {
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
+
+    btnClick =  () => {
+      this.router.navigateByUrl('/analysis');
+};
 
 }
 

@@ -6,15 +6,12 @@
             <br />
             <google-map width="auto" height="800px">
 
-                <map-marker [position]="{ lat: -25.363, lng: 131.044 }">
-
-                </map-marker>
             </google-map>
 
         </div>
         <div class="col-lg-6" id="image_collection">
             <div class="container vertical-scrollable">
-                <img class="drone-image" [src]="img" *ngFor="let img of images" id="the-img" (click)="ejemplo()"/>
+                <img class="drone-image" [src]="img" *ngFor="let img of images" id="the-img" (click)="ejemplo()" />
             </div>
         </div>
     </div>
