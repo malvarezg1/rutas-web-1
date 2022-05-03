@@ -23,10 +23,10 @@ export class MultimediaService {
 
   // Get a reference to the storage service, which is used to create references in your storage bucket
   private storage = getStorage(this.firebaseApp);
-  private imagesRefernece = ref(this.storage, 'images');
+  private imagesRefernece = ref(this.storage, 'prueba');
 
   getImage(name: String){
-    let multiReference = ref(this.storage, 'images/' + name);
+    let multiReference = ref(this.storage, 'prueba/' + name);
     let bytes = getBytes(multiReference)
     return bytes
   }
