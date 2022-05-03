@@ -4,15 +4,11 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 const EXIF = require('exif-js');
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
+import {ExifParserFactory} from "ts-exif-parser";
+import { Image } from 'src/app/classes/image.class';
+import { Marker } from 'src/app/classes/marker.class';
 
 
-
-class Image {
-  constructor(
-    public url: SafeResourceUrl,
-    public name : String
-  ){}
-}
 
 @Component({
   selector: 'app-paths',
@@ -33,9 +29,10 @@ export class GalleryComponent implements OnInit {
   public script = false;
   public image!: SafeUrl;
   public images = new Array<Image>();
+  public markers = new Array<Marker>();
 
 
-  async fetchData(): Promise<void>{
+  async fetchData(): Promise<void> {
     this.multiService.listImages().then(res => {
       res.items.forEach(element => {
         this.displayImage(element.name)
@@ -47,50 +44,32 @@ export class GalleryComponent implements OnInit {
   ngOnInit(): void {
     let promesa = this.fetchData();
 
-    promesa.then(res =>{
+    promesa.then(res => {
       console.log("TERMINO TODO!")
     })
   }
 
-  displayImage(name: String){
-      this.multiService.getImage(name).then(resp =>{
-        let  string64b = this.arrayBufferToBase64(resp)
-        let url = this.sanitize("data:image/jpg;base64," +string64b)
-        let  img = new Image(url, name)
-        this.images.push(img)
-        console.log("ACA");
+  displayImage(name: String) {
+    this.multiService.getImage(name).then(resp => {
 
-        EXIF.getData(img, () => {
-          const make = EXIF.getTag(this, 'Make');
-          console.log(make);
-        });
-      })
-    }
+      //Save Latitrudes and Logitudes
+      const Data = ExifParserFactory.create(resp).parse();
 
-  ejemplo(): void{
-    console.log("ENTROO !!!!!")
-    if(this.script == false){
-      this.script = true;
-      //Script
-      let script = this._renderer2.createElement('script');
-      script.text = `
-      {
-          document.getElementById("the-img").onclick = function() {
+      //Lat
+      let lat = Data.tags!.GPSLatitude as number ;
 
-            EXIF.getData(this, function() {
+      //Long
+      let long = Data.tags!.GPSLongitude  as number;
+      let marker = new Marker(lat, long)
+      this.markers.push(marker)
+      
 
-                myData = this;
-
-                console.log(myData.exifdata);
-            });
-        }
-      }
-      `;
-      this._renderer2.appendChild(this.document.body, script);
-    }
+      let string64b = this.arrayBufferToBase64(resp)
+      let url = this.sanitize("data:image/jpg;base64," + string64b)
+      let img = new Image(url, name)
+      this.images.push(img)
+    })
   }
-
-
 
   arrayBufferToBase64(buffer: ArrayBuffer) {
     var binary = '';
@@ -106,8 +85,8 @@ export class GalleryComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
-  btnClick =  (id: String) => {
-      this.router.navigateByUrl('/analysis/'+id)  ;
+  btnClick = (id: String) => {
+    this.router.navigateByUrl('/analysis/' + id);
   };
 }
 
