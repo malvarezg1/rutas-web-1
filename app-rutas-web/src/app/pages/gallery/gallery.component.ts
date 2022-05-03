@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { MultimediaService } from '../../services/multimedia.service';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import * as EXIF from 'exif-js';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 
 class Image {
   constructor(
-    public url: SafeUrl,
+    public url: SafeResourceUrl,
     public name : String
   ){}
 }
@@ -55,9 +55,9 @@ export class GalleryComponent implements OnInit {
   displayImage(name: String){
       this.multiService.getImage(name).then(resp =>{
         let  string64b = this.arrayBufferToBase64(resp)
-        let url = this.sanitize(" binding: data:image/jpg;base64, " +string64b)
+        let url = this.sanitize("data:image/jpg;base64," +string64b)
+        console.log("sanitized")
         let  img = new Image(url, name)
-        console.log(img)
         this.images.push(img)
       })
     }
