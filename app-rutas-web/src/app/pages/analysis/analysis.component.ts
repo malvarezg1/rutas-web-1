@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RoutesService } from 'src/app/services/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { MultimediaService } from 'src/app/services/multimedia.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -33,7 +32,6 @@ export class AnalysisComponent implements OnInit {
       this.multiService.getImage(name).then(resp =>{
         let  string64b = this.arrayBufferToBase64(resp)
         let url = this.sanitize("data:image/jpg;base64," +string64b)
-        console.log(url)
         this.imageUrl = url
       });
     }
