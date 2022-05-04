@@ -1,10 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { getFirestore } from 'firebase/firestore';
-import { initializeApp } from 'firebase/app';
-import { getBytes, getStorage, listAll, ref } from 'firebase/storage';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { storage } from 'firebase-admin';
+
 
 /**
  * Servicio para solicitar informacion desde la base de datos de rutas
@@ -15,13 +11,18 @@ import { storage } from 'firebase-admin';
 export class MultimediaService {
   constructor(private storage: AngularFireStorage) {}
 
-  private imagesRefernece = this.storage.ref('prueba');
+  private imagesRefernece = this.storage.ref('images');
 
   listImages() {
     return this.imagesRefernece.listAll();
   }
 
   getImage(name: String) {
-    return this.storage.ref('prueba/' + name).getDownloadURL();
+    return this.storage.ref('images/' + name).getDownloadURL();
+  }
+
+  getImageAnalysis(analysis: string,name: string) {
+    console.log(analysis+'/' + name)
+    return this.storage.ref(analysis+'/' + name).getDownloadURL();
   }
 }

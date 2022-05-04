@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,14 +27,13 @@ import { AngularFireModule } from "@angular/fire/compat/";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
-
 @NgModule({
   declarations: [
     AppComponent,
     PathComponent,
     PathsComponent,
     GalleryComponent,
-    AnalysisComponent
+    AnalysisComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,13 +45,11 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-
-
 
 }
