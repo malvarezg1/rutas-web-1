@@ -19,12 +19,8 @@ import { Marker } from 'src/app/classes/marker.class';
 })
 export class GalleryComponent implements OnInit {
   constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private _renderer2: Renderer2,
-
     private router: Router,
     private multiService: MultimediaService,
-    private sanitizer: DomSanitizer
   ) {}
 
   public script = false;
