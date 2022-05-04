@@ -1,10 +1,14 @@
 .vertical-scrollable{
   height: 70vh;
   overflow-y: scroll;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 }
 
 .drone-image{
   height:150px;
   width:250px;
   margin: 5px 10px 5px 0px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 }
+
+

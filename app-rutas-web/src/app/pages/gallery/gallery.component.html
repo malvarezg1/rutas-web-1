@@ -2,12 +2,10 @@
     <div class="row">
         <h1>Gallery</h1>
         <div class="col-lg-6">
-            <h2>Espacio para mapa</h2>
-            <br />
-            <google-map width="auto" height="800px">
+            <google-map width="auto" height="500px">
               <div class="col-lg-6"  *ngFor="let marker of markers">
                 <map-marker [position]="{ lat: marker.lat, lng: marker.long}">
-                </map-marker>              
+                </map-marker>
               </div>
             </google-map>
         </div>
