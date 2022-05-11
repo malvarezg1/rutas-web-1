@@ -17,11 +17,22 @@ export class MultimediaService {
 
   private imagesRefernece = this.storage.ref('prueba');
 
+  private videosRefernece = this.storage.ref('videos');
+
+
   listImages() {
     return this.imagesRefernece.listAll();
   }
 
+  listVideos() {
+    return this.videosRefernece.listAll();
+  }
+
   getImage(name: String) {
     return this.storage.ref('prueba/' + name).getDownloadURL();
+  }
+
+  getVideo(name: String) {
+    return this.storage.ref('videos/' + name).getDownloadURL();
   }
 }

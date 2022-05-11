@@ -2,6 +2,8 @@
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import url("../node_modules/bootstrap/dist/css/bootstrap.min.css") html;
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 body {
     height: 100;
 }

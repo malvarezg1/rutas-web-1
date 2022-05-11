@@ -31,9 +31,19 @@ export class AnalysisComponent implements OnInit {
     });
   }
 
+  displayVideo(name: String) {
+    this.multiService.getVideo(name).subscribe((res) => {
+      this.imageUrl = res;
+    });
+  }
+
   ngOnInit(): void {
     this.displayImage(this.idUrl);
+    this.displayVideo(this.idUrl)
+
     let id = this.idUrl.replace('.jpg', '');
+    id = this.idUrl.replace('.mp4', '');
+
     this.firestore.getAnalysis(id).subscribe((res) => {
       this.analysis = res.data()!;
       console.log(this.analysis.persons);

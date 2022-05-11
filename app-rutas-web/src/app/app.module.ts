@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 //Importacion de librerias/modulos externos
 import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 //Componentes
@@ -46,7 +48,9 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    MatToolbarModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
