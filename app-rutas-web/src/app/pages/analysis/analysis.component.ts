@@ -25,8 +25,8 @@ export class AnalysisComponent implements OnInit {
     this.idUrl = this.url.snapshot.paramMap.get('id') + '';
   }
 
-  displayImage(name: String) {
-    this.multiService.getImage(name).subscribe((res) => {
+  displayImage(name: string) {
+    this.multiService.getImageAnalysis('personas',name).subscribe((res) => {
       this.imageUrl = res;
     });
   }
