@@ -29,7 +29,6 @@ export class MultimediaService {
   }
 
   getImageAnalysis(analysis: string,name: string) {
-    console.log(analysis+'/' + name)
     return this.storage.ref(analysis+'/' + name).getDownloadURL();
   }
 

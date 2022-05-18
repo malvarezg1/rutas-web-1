@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MultimediaService } from 'src/app/services/multimedia.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AnalysisList } from 'src/app/classes/analysisList.class';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-paths',
@@ -13,8 +13,16 @@ import { AnalysisList } from 'src/app/classes/analysisList.class';
 })
 export class AnalysisComponent implements OnInit {
   private idUrl!: string;
+  private sourceUrl!: string;
+
   public imageUrl!: SafeUrl;
+  public videoUrl!: SafeUrl;
+  public isImage: boolean = true;
+
   private analysis!: AnalysisList;
+
+
+  @ViewChild("videoPlayer", { static: false }) videoplayer!: ElementRef;
 
   constructor(
     private url: ActivatedRoute,
@@ -23,30 +31,49 @@ export class AnalysisComponent implements OnInit {
     private firestore: FirestoreService
   ) {
     this.idUrl = this.url.snapshot.paramMap.get('id') + '';
+    this.sourceUrl = this.url.snapshot.paramMap.get('source') + ''
   }
 
-  displayImage(name: string) {
-    this.multiService.getImageAnalysis('personas',name).subscribe((res) => {
+  // Get image and display on screen
+  displayImage(source : string , name: string) {
+    this.multiService.getImageAnalysis(source,name).subscribe((res) => {
       this.imageUrl = res;
     });
   }
 
+    // Get video and display on screen
   displayVideo(name: String) {
     this.multiService.getVideo(name).subscribe((res) => {
-      this.imageUrl = res;
+      this.videoUrl = res;
+      console.log(this.videoUrl)
     });
   }
 
-  ngOnInit(): void {
-    this.displayImage(this.idUrl);
-    this.displayVideo(this.idUrl)
-
-    let id = this.idUrl.replace('.jpg', '');
-    id = this.idUrl.replace('.mp4', '');
-
+  // Get shapes of person count
+  fetchAnalysis(id : string){
     this.firestore.getAnalysis(id).subscribe((res) => {
       this.analysis = res.data()!;
       console.log(this.analysis.persons);
     });
+  }
+
+  btnPersonsCount(){
+    this.displayImage("personas", this.idUrl)
+    this.fetchAnalysis(this.idUrl.replace('.jpg', ''))
+  }
+
+  toggleVideo(){
+    this.videoplayer.nativeElement.play();
+  }
+
+
+  ngOnInit(): void {
+    if(this.sourceUrl =="video"){
+      this.displayVideo(this.idUrl);
+      this.isImage = false;
+    }
+    else{
+      this.displayImage("images", this.idUrl);
+    }
   }
 }

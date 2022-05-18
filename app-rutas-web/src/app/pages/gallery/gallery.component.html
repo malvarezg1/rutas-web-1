@@ -2,7 +2,7 @@
     <div class="row">
         <h1>Gallery</h1>
         <div class="col-lg-6">
-            <google-map width="auto" height="500px">
+            <google-map width="auto" [options]="options" height="500px">
                 <div class="col-lg-6" *ngFor="let marker of markers">
                     <map-marker [position]="{ lat: marker.lat, lng: marker.long}">
                     </map-marker>
@@ -16,7 +16,7 @@
                         <div class="container vertical-scrollable">
                             <div class="row">
                                 <div class="col-lg-6" *ngFor="let img of images">
-                                    <img class="drone-image" [src]="img.url" [id]="img.name" (click)="btnClick(img.name)" />
+                                    <img class="drone-image" [src]="img.url" [id]="img.name" (click)="btnImageClick(img.name)" />
                                     <a>{{img.name}}</a>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                         <div class="container vertical-scrollable">
                             <div class="row">
                                 <div class="col-lg-6" *ngFor="let video of videos">
-                                    <img class="drone-video" src="https://www.learntotrade.com.ph/assets-lttph/uploads/2016/04/video-preview-pic.jpg" [id]="video.name" [alt]="video.name" (click)="btnClick(video.name)" />
+                                    <img class="drone-video" src="https://www.learntotrade.com.ph/assets-lttph/uploads/2016/04/video-preview-pic.jpg" [id]="video.name" [alt]="video.name" (click)="btnVideoClick(video.name)" />
                                     <a>{{video.name}}</a>
                                 </div>
                             </div>

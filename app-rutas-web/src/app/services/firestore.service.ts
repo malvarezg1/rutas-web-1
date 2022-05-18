@@ -13,7 +13,7 @@ export class FirestoreService {
 
   getAnalysis(id: string) {
     return this.firestore
-      .doc<AnalysisList>('Analyzed_Media/DJI4-21-2022, 10:00:03 PM')
+      .doc<AnalysisList>('Analyzed_Media/'+ id)
       .get();
   }
 }
