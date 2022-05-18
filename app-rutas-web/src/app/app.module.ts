@@ -28,6 +28,7 @@ import { environment } from "src/environments/environment";
 import { AngularFireModule } from "@angular/fire/compat/";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     PathsComponent,
     GalleryComponent,
     AnalysisComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
