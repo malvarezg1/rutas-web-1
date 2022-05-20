@@ -28,11 +28,15 @@ export class MultimediaService {
     return this.storage.ref('images/' + name).getDownloadURL();
   }
 
-  getImageAnalysis(analysis: string,name: string) {
+  getImageAnalysis(analysis: string, name: string) {
     return this.storage.ref(analysis+'/' + name).getDownloadURL();
   }
 
   getVideo(name: String) {
     return this.storage.ref('videos/' + name).getDownloadURL();
+  }
+
+  getVideoAnalysis(analysis: string, name: string) {
+    return this.storage.ref(analysis+'/' + name).getDownloadURL();
   }
 }

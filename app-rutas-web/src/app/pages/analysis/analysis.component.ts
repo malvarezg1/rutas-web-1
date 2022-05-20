@@ -42,8 +42,8 @@ export class AnalysisComponent implements OnInit {
   }
 
     // Get video and display on screen
-  displayVideo(name: String) {
-    this.multiService.getVideo(name).subscribe((res) => {
+  displayVideo(source : string , name: string) {
+    this.multiService.getVideoAnalysis(source, name).subscribe((res) => {
       this.videoUrl = res;
       console.log(this.videoUrl)
     });
@@ -58,8 +58,14 @@ export class AnalysisComponent implements OnInit {
   }
 
   btnPersonsCount(){
-    this.displayImage("personas", this.idUrl)
-    this.fetchAnalysis(this.idUrl.replace('.jpg', ''))
+    if(this.sourceUrl =="video"){
+      this.displayVideo("videosPersonas", this.idUrl)
+      this.isImage = false;
+    }
+    else{
+      this.displayImage("personas", this.idUrl)
+      this.fetchAnalysis(this.idUrl.replace('.jpg', ''))
+    }
   }
 
   toggleVideo(){
@@ -69,7 +75,7 @@ export class AnalysisComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.sourceUrl =="video"){
-      this.displayVideo(this.idUrl);
+      this.displayVideo("videos",this.idUrl);
       this.isImage = false;
     }
     else{
