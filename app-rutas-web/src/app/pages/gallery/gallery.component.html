@@ -28,7 +28,7 @@
                         <div class="container vertical-scrollable">
                             <div class="row">
                                 <div class="col-lg-6" *ngFor="let video of videos">
-                                    <img class="drone-video" src="https://www.learntotrade.com.ph/assets-lttph/uploads/2016/04/video-preview-pic.jpg" [id]="video.name" [alt]="video.name" (click)="btnVideoClick(video.name)" />
+                                    <img class="drone-video" [src]="video.thumbnailUrl" [id]="video.name" [alt]="video.name" (click)="btnVideoClick(video.name)" />
                                     <a>{{video.name}}</a>
                                 </div>
                             </div>

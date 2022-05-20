@@ -78,9 +78,11 @@ export class GalleryComponent implements OnInit {
   //Display Video
   displayVideo(name: string) {
     this.multiService.getVideo(name).subscribe((res) => {
-      let video = new Video(res, name);
-      this.videos.push(video);
 
+      this.multiService.getThumbnail(name).subscribe((data) => {
+        let video = new Video(res, name, data);
+        this.videos.push(video);
+      });
     });
   }
 

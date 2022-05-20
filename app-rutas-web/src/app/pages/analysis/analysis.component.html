@@ -1,41 +1,41 @@
 <div class="container">
-  <div class="row">
-    <div class="col-lg-8" >
+  <div class="row" >
+    <div class="col-lg-8"  *ngIf="isImage ; else video">
       <h2>Analysis</h2>
       <div *ngIf="isImage ; else video">
         <img [src]="imageUrl" />
       </div>
-    <ng-template #video>
-      <video muted autoplay  *ngIf="videoUrl" id="video1" height="400px" class="img" controls>
-        <source [src]="videoUrl" type='video/mp4' />
-        Browser not supported
-    </video>
-    </ng-template>
   </div>
-    <div class="col-lg-4 ">
-      <div class="row">
-        <br>
-        <h4> Options </h4>
-        <div class="col-lg-6">
-          <button (click)="btnPersonsCount()">Persons Count</button>
-        </div>
-        <div *ngIf = "analysis">
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Category</th>
-                <th scope="col">Count</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Personas</td>
-                <td>{{analysis.persons.count}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div class="col-lg-4 ">
+    <div class="row">
+      <br>
+      <h4> Options </h4>
+      <div class="col-lg-6">
+        <button (click)="btnPersonsCount()">Persons Count</button>
+      </div>
+      <div *ngIf = "analysis">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Category</th>
+              <th scope="col">Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Personas</td>
+              <td>{{analysis.persons.count}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+  </div>
+  <ng-template #video>
+    <video muted autoplay  *ngIf="videoUrl" id="video1" height="400px" class="img" controls>
+      <source [src]="videoUrl" type='video/mp4' />
+      Browser not supported
+  </video>
+  </ng-template>
   </div>
 </div>

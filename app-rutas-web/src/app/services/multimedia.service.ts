@@ -36,6 +36,10 @@ export class MultimediaService {
     return this.storage.ref('videos/' + name).getDownloadURL();
   }
 
+  getThumbnail(name: String) {
+    return this.storage.ref('videosThumbnail/' + name).getDownloadURL();
+  }
+
   getVideoAnalysis(analysis: string, name: string) {
     return this.storage.ref(analysis+'/' + name).getDownloadURL();
   }

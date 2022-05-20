@@ -77,7 +77,7 @@ export class AnalysisComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.sourceUrl =="video"){
-      this.displayVideo("videos",this.idUrl);
+      this.displayVideo("videosPersonas",this.idUrl);
       this.isImage = false;
     }
     else{
