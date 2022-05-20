@@ -18,8 +18,10 @@ export class AnalysisComponent implements OnInit {
   public imageUrl!: SafeUrl;
   public videoUrl!: SafeUrl;
   public isImage: boolean = true;
+  public personCount!: number;
 
-  private analysis!: AnalysisList;
+
+  public analysis!: AnalysisList;
 
 
   @ViewChild("videoPlayer", { static: false }) videoplayer!: ElementRef;
@@ -53,7 +55,7 @@ export class AnalysisComponent implements OnInit {
   fetchAnalysis(id : string){
     this.firestore.getAnalysis(id).subscribe((res) => {
       this.analysis = res.data()!;
-      console.log(this.analysis.persons);
+      console.log(this.analysis.persons );
     });
   }
 

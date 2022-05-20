@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-8" >
+      <h2>Analysis</h2>
       <div *ngIf="isImage ; else video">
         <img [src]="imageUrl" />
       </div>
@@ -11,11 +12,28 @@
     </video>
     </ng-template>
   </div>
-    <div class="col-lg-4">
-      <h2>Analysis</h2>
+    <div class="col-lg-4 ">
       <div class="row">
+        <br>
+        <h4> Options </h4>
         <div class="col-lg-6">
           <button (click)="btnPersonsCount()">Persons Count</button>
+        </div>
+        <div *ngIf = "analysis">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Personas</td>
+                <td>{{analysis.persons.count}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

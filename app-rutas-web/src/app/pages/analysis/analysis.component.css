@@ -10,3 +10,19 @@ button{
 img{
   width: 100%;
 }
+
+table{
+  margin-top: 50px;
+  margin-left: 20px;
+}
+
+.box{
+  margin-top: 50px;
+  height: 480px;
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+h4{
+  margin-top: 10px;
+  margin-left: 20px;
+}
