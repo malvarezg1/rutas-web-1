@@ -7,7 +7,7 @@
       </div>
   </div>
   <div class="col-lg-4 ">
-    <div class="row">
+    <div class="row" *ngIf="isImage ; ">
       <br>
       <h4> Options </h4>
       <div class="col-lg-6">
@@ -32,7 +32,7 @@
     </div>
   </div>
   <ng-template #video>
-    <video muted autoplay  *ngIf="videoUrl" id="video1" height="400px" class="img" controls>
+    <video muted autoplay  *ngIf="videoUrl" id="video1" height="800px" class="img" controls>
       <source [src]="videoUrl" type='video/mp4' />
       Browser not supported
   </video>
