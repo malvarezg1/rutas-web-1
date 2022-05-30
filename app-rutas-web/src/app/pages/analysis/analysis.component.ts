@@ -66,7 +66,7 @@ export class AnalysisComponent implements OnInit {
     }
     else{
       this.displayImage("personas", this.idUrl)
-      this.fetchAnalysis(this.idUrl.replace('.jpg', ''))
+      this.fetchAnalysis(this.idUrl)
     }
   }
 
